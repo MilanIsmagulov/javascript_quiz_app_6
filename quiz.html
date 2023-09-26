@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/style.css">
+    <script src="./script/main.js" defer></script>
+    <title>Своя игра</title>
+</head>
+<body>
+    <div class="upper_side">
+        <div class="black_header">
+            <h1>
+                Своя игра
+            </h1>
+            <div class="links_black_header">
+                <a href="../../../../index.html">На главную</a>
+                <a href="../../../new_material/page_new_mat.html">Назад</a>
+            </div>
+        </div>
+    </div>
+    <div class="main_window">
+        <div class="left_side">
+            <p class="left_side_text">
+                Перед вами задания разных уровней сложности. У вас 10 попыток, чтобы получить призовые 1550 очков. Кликните на карточку, чтобы перейти к заданию. Выберите вариант (варианты) ответа и нажмите кнопку «Ответить»
+            </p>
+            <div class="questions_cards_side">
+                <div class="very_easy_questions">
+                    <button id="very_easy_question_1">100</button>
+                    <button id="very_easy_question_2">100</button>
+                    <button id="very_easy_question_3">100</button>
+                </div>
+                <div class="easy_questions">
+                    <button id="easy_question_1">150</button>
+                    <button id="easy_question_2">150</button>
+                    <button id="easy_question_3">150</button>
+                </div>
+                <div class="middle_questions">
+                    <button id="middle_question_1">200</button>
+                    <button id="middle_question_2">200</button>
+                    <button id="middle_question_3">200</button>
+                </div>
+                <div class="middle_hard_questions">
+                    <button id="middle_hard_question_1">250</button>
+                    <button id="middle_hard_question_2">250</button>
+                    <button id="middle_hard_question_3">250</button>
+                </div>
+                <div class="hard_questions">
+                    <button id="hard_question_1">300</button>
+                    <button id="hard_question_2">300</button>
+                    <button id="hard_question_3">300</button>
+                </div>
+            </div>
+            <div class="scoring_side">
+                <div class="number_of_points">
+                    <p>Количество очков</p>
+                    <p class="points" id="points_of_correct_1">0</p>
+                </div>
+                <div class="number_of_points">
+                    <p>Количество попыток</p>
+                    <p class="points">10</p>
+                </div>
+            </div>
+        </div>
+        <div class="right_side">
+            <img src="./content/logo_of_profi.png" alt="">
+        </div>
+    </div>
+    <div id="popup_main_1" class="popup closed">
+        <div class="popup_body">
+            <div class="popup_content">
+                <div class="close_popup">
+                    <div class="questions" id="question_number_1">
+                            
+                    </div>
+                    <button id="close_popup_button_1" class="close_popup_button">
+                        <img src="./content/close.svg" alt="close_popup">
+                    </button>
+                </div>
+                <div class="answers_btn" id="answers_buttons1">
+                            
+                </div>
+                <div class="main_buttons">
+                    <button id="check_button_1">
+                        Ответить
+                    </button>
+                    <button id="check_button_2">
+                        Повторить
+                    </button>
+                    <button id="check_button_3">
+                        Далее
+                    </button>
+                    <p>За этот вопрос вы можете получить 100 Очков</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
