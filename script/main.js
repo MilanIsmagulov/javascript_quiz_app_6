@@ -23,15 +23,10 @@ let correctMarkerPlace = document.querySelector('#correct_marker_1');
 // let veryEasyQuestion3 = document.querySelector('#very_easy_question_3');
 let parseQuestionPlace = document.querySelector('#text_question_1');
 let pointsOfAttemptPlace= document.querySelector('#points_of_attempt_1');
-
-// 
-// let test = document.querySelector('#question_number_1');
-// let testAnswers = document.querySelector('#answers_buttons1');
-// let Povtor = document.querySelector('#check_button_2');
-// let Dalee = document.querySelector('#check_button_3');
 let popupsPart = document.querySelector('#popup_answers_1');
 
 // Массив с вопросами
+
 let mainQuestions = [
     {
         text: '1) 2 + 2 = ?',
@@ -250,7 +245,7 @@ for (i = 0; i < mainQuestions.length; i++ ){
 
 checkBtnFromDOM = document.querySelector('.check_button');
 checkBtnFromDOM.addEventListener('click', function(){
-    
+
     console.log(1);
 });
 
