@@ -212,7 +212,7 @@ body{
     background-color: rgba(0, 0, 0, 0.8);
     top: 0;
     left: 0;
-    transition: all 0.3s;
+    transition: all .3s;
 }
 
 .closed{
@@ -283,3 +283,4 @@ body{
     height: 45px;
     width: 45px;
 }
+
