@@ -58,6 +58,8 @@ for(let question of questions){
 
 
 
+        // rr
+
         let i = 1;
     // Рендер вопросов из списка
         for (let question of questions){
