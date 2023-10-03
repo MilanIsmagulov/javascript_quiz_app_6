@@ -284,3 +284,14 @@ body{
     width: 45px;
 }
 
+.second_type_questions{
+    display: flex;
+    margin-top: 25px;
+    width: 95%;
+    justify-content: space-around;
+}
+
+.second_type_questions img{
+    height: 550px;
+    width: 400px;
+}

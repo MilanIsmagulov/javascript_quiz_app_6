@@ -25,6 +25,7 @@ let parseQuestionPlace = document.querySelector('#text_question_1');
 let pointsOfAttemptPlace= document.querySelector('#points_of_attempt_1');
 let popupsPart = document.querySelector('#popup_answers_1');
 
+
 // Массив с вопросами
 
 let mainQuestions = [
@@ -33,19 +34,20 @@ let mainQuestions = [
         right: 0,
         type: 1,
         points: 100,
-        answers: ['3424', '234', '24', '23423433', '534',],
+        answers: ['3424', '234', '24', '23423433',],
     },
     {
         text: '2) 2 + 2 = ?',
         right: 1,
         type: 2,
+        sourceImg: './content/03_01.png',
         points: 100,
         answers: ['23424', '234234', '233', '333',],
     },
     {
         text: '3) 2 + 1 = ?',
         right: 2,
-        type: 1,
+        type: 3,
         points: 100,
         answers: ['222', '4444', '55555', '111',],
     },
@@ -66,7 +68,8 @@ let mainQuestions = [
     {
         text: '6) 2 + 1 = ?',
         right: 2,
-        type: 3,
+        type: 2,
+        sourceImg: './content/03_01.png',
         points: 150,
         answers: ['2332', '54545', '354', '5445',],
     },
@@ -127,14 +130,17 @@ let mainQuestions = [
         answers: ['678678', '9898', '0909', '1221',],
     },
     {
-        text: '15) 2 + 1 = ?',
-        right: 2,
-        type: 1,
+        text: ['JavaScript is', 'programming language'],
+        right: [0, 2,],
+        type: 4,
         points: 300,
-        answers: ['4343', '8778', '9889', '32',],
+        answers: [2, 1,],
+        answers2: [2, 1,],
     },
 ];
 
+// const testType4 = `${mainQuestions[14].text[0]} <select>${mainQuestions[14].map(answer => `<option>${answer.answers}</option>`)}</select>`
+// console.log(testType4)
 
 // Цикл создающий модальные окна, также пушит вопросы и ответы
 for (i = 0; i < mainQuestions.length; i++ ){
@@ -164,7 +170,9 @@ for (i = 0; i < mainQuestions.length; i++ ){
     let questionsPlace = document.createElement('div');
     questionsPlace.classList.add('questions');
     questionsPlace.id = 'question_number' + '_' + i;
-    questionsPlace.innerHTML = mainQuestions[i].text;
+    if (mainQuestions[i].type !== 4){
+        questionsPlace.innerHTML = mainQuestions[i].text;
+    }
     
 
     popUpContentWindow.appendChild(closePopupButton);
@@ -189,6 +197,7 @@ for (i = 0; i < mainQuestions.length; i++ ){
 
     popUpContentWindow.appendChild(answerPlace);
 
+
     if(mainQuestions[i].type == 1){
         let form = document.createElement('form');
         answerPlace.appendChild(form);
@@ -211,43 +220,110 @@ for (i = 0; i < mainQuestions.length; i++ ){
         };
     };
 
+
     if(mainQuestions[i].type == 2){
-        console.log('Type of question is 2');
+        let mainWindow = document.createElement('div');
+        mainWindow.classList = ('second_type_questions');
+        mainWindow.id = 'second_type_question_' + i;
+        answerPlace.appendChild(mainWindow);
+
+        let secondTypeImg = document.createElement('img');
+        secondTypeImg.src = mainQuestions[i].sourceImg
+        mainWindow.appendChild(secondTypeImg);
+
+        let form = document.createElement('form');
+        mainWindow.appendChild(form)
+        form.dataset.right = mainQuestions[i].right;
+
+        for (let answer of mainQuestions[i].answers) {
+            let j = 0;
+            let divInp = document.createElement('div');
+            divInp.classList = ('answer_div');
+            form.appendChild(divInp);
+    
+            let input = document.createElement('input');
+            input.type = 'radio';
+            input.name = j++;
+            input.dataset.answer = j++;
+            divInp.appendChild(input);
+            let answ = document.createElement('p');
+            answ.innerHTML = answer;
+            divInp.appendChild(answ);
+        };
     };
+
 
     if(mainQuestions[i].type == 3){
-        console.log('Type of question is 3');
+        let form = document.createElement('form');
+        answerPlace.appendChild(form);
+        form.dataset.right = mainQuestions[i].right;
+    
+        for (let answer of mainQuestions[i].answers) {
+            let j = 0;
+            let divInp = document.createElement('div');
+            divInp.classList = ('answer_div');
+            form.appendChild(divInp);
+    
+            let input = document.createElement('input');
+            input.type = 'checkbox';
+            input.name = i++;
+            divInp.appendChild(input);
+            let answ = document.createElement('p');
+            answ.innerHTML = answer;
+            divInp.appendChild(answ);
+        };
     };
 
-    if(mainQuestions[i].type == 4){
-        console.log('Type of question is 4');
-    };
+
+    // if(mainQuestions[i].type == 4){
+    //     answerPlace.innerHTML = mainQuestions[i].text 
+    // };
+
 
     let mainButtonsPlace = document.createElement('div');
     mainButtonsPlace.classList.add('main_buttons');
-    
     answerPlace.appendChild(mainButtonsPlace);
 
     let checkAnswerBtn = document.createElement('button');
     checkAnswerBtn.classList.add('check_button');
     checkAnswerBtn.id = 'check_button' + '_' + i;
     checkAnswerBtn.innerHTML = 'Ответить';
-    mainButtonsPlace.innerHTML = '<p>' + 'За этот вопрос вы можете получить ' + mainQuestions[i].points + ' очков' + '</p>';
+    checkAnswerBtn.setAttribute('onclick', 'checkAnswerFunction'+ '(' + i + ')');
+    mainButtonsPlace.innerHTML = '<p>' + 'За этот вопрос вы можете получить ' + mainQuestions[i].points + ' очков' + '</p>' + '<br>';
 
     mainButtonsPlace.appendChild(checkAnswerBtn);
 
 }; 
 
 
-
-
-
-
-checkBtnFromDOM = document.querySelector('.check_button');
-checkBtnFromDOM.addEventListener('click', function(){
-
-    console.log(1);
-});
+for (i = 0; i < mainQuestions.length; i++ ){
+    let forms = document.querySelectorAll('form');
+    function checkAnswerFunction(i){
+        if (mainQuestions[i].type == 1){
+            
+            
+            for (let form of forms){
+                let inputs = form.querySelectorAll('input');
+                
+                for (let input of inputs){
+                    if (input.checked){
+                        if (input.dataset.answer == mainQuestions[i].right){
+                            console.log(1)
+                        }
+                    }
+                }
+            }
+        } else if(mainQuestions[i].type == 2){
+            console.log(2)
+        } else if(mainQuestions[i].type == 3){
+            console.log(3)
+        } else if(mainQuestions[i].type == 4){
+            console.log(4)
+        } else if(mainQuestions[i].type == 5){
+            console.log(5)
+        }
+    };
+};
 
 
 // Новые переменные связанные с созданными Модальными окнами
@@ -269,7 +345,7 @@ let PopUp15 = document.querySelector('#popup_14');
 
 
 // Пушим переменные модальных окон в массив для удобного вызова функции
-popUpArr = [ PopUp1, PopUp2, PopUp3, PopUp4, PopUp5, PopUp6, PopUp7, 
+popUpArr = [PopUp1, PopUp2, PopUp3, PopUp4, PopUp5, PopUp6, PopUp7, 
 PopUp8, PopUp9, PopUp10, PopUp11, PopUp12, PopUp13, PopUp14, PopUp15,];
 
 
@@ -373,57 +449,59 @@ function showQuestion(i){
 
 
 
-//     let chekBtn = document.querySelector('#check_button_1');
-//         chekBtn.addEventListener('click', function(){
-//             let forms = document.querySelectorAll('#answers_buttons1 form');
-//             for (let form of forms){
-//                 form.classList.remove('correct');
-//                 form.classList.remove('incorrect');
-//                 let inputs = form.querySelectorAll('input');
-//                 for (let input of inputs){
-//                     if (input.checked){
-//                         let disButton = document.querySelector('#check_button_1');
-//                         if (input.dataset.answerNum == form.dataset.right){
-//                             arrPoints.push(100)
-//                             let imgCorrect = document.createElement('img');
-//                             imgCorrect.src = './content/correct.svg';
-//                             correctMarkerPlace.appendChild(imgCorrect);
-//                             pointsOfAttemptPlace.innerHTML = pointsOfAttempt - 1;
+// let chekBtn = document.querySelector('#check_button_1');
+//     chekBtn.addEventListener('click', function(){
+//         let forms = document.querySelectorAll('#answers_buttons1 form');
+//         for (let form of forms){
+//             form.classList.remove('correct');
+//             form.classList.remove('incorrect');
+//             let inputs = form.querySelectorAll('input');
+//             for (let input of inputs){
+//                 if (input.checked){
+//                     let disButton = document.querySelector('#check_button_1');
+//                     if (input.dataset.answerNum == form.dataset.right){
+//                         arrPoints.push(100)
+//                         let imgCorrect = document.createElement('img');
+//                         imgCorrect.src = './content/correct.svg';
+//                         correctMarkerPlace.appendChild(imgCorrect);
+//                         pointsOfAttemptPlace.innerHTML = pointsOfAttempt - 1;
 
 
-//                             disButton.classList.remove('disabled_button');
-//                             Povtor.classList.add('disabled_button');
-//                             Dalee.classList.add('disabled_button');
+//                         disButton.classList.remove('disabled_button');
+//                         Povtor.classList.add('disabled_button');
+//                         Dalee.classList.add('disabled_button');
 
-//                             form.children[0].classList.add('correct');
-//                             for(let i = 1; i < 4; i++){
-//                                 form.children[i].classList.add('incorrect2');
-//                             }
-//                             for(let i = 0; i < 4; i++){
-//                                 form.children[i].children[0].disabled = true;
-//                             }
-//                         }else{
-//                             let imgCorrect = document.createElement('img');
-//                             imgCorrect.src = './content/incorrect.svg';
-//                             correctMarkerPlace.appendChild(imgCorrect);
-//                             pointsOfAttemptPlace.innerHTML = pointsOfAttempt - 1;
+//                         form.children[0].classList.add('correct');
+//                         for(let i = 1; i < 4; i++){
+//                             form.children[i].classList.add('incorrect2');
+//                         }
+//                         for(let i = 0; i < 4; i++){
+//                             form.children[i].children[0].disabled = true;
+//                         }
+//                     }else{
+//                         let imgCorrect = document.createElement('img');
+//                         imgCorrect.src = './content/incorrect.svg';
+//                         correctMarkerPlace.appendChild(imgCorrect);
+//                         pointsOfAttemptPlace.innerHTML = pointsOfAttempt - 1;
 
-//                             disButton.classList.remove('disabled_button');
-//                             Povtor.classList.add('disabled_button');
-//                             Dalee.classList.add('disabled_button');
-//                             let wrAns = input.dataset.answerNum
-                            
-//                             form.children[wrAns].classList.add('incorrect');
+//                         disButton.classList.remove('disabled_button');
+//                         Povtor.classList.add('disabled_button');
+//                         Dalee.classList.add('disabled_button');
+//                         let wrAns = input.dataset.answerNum
+                        
+//                         form.children[wrAns].classList.add('incorrect');
 
-//                             for(let i = 0; i < 4; i++){
-//                                 form.children[i].children[0].disabled = true;
-//                             }
-//                         };
-//                     break;
-//                 };
+//                         for(let i = 0; i < 4; i++){
+//                             form.children[i].children[0].disabled = true;
+//                         }
+//                     };
+//                 break;
 //             };
 //         };
-//     });
+//     };
+// });
+
+
 //     let arrPoints = [];
 
 //     let pointsOfCorrect= document.querySelector('#points_of_correct_1');
