@@ -343,6 +343,7 @@ console.log(cardsPlace)
 
 function checkAnswerFunction(i){
     let minusAttempt = pointsOfAttempt--
+    console.log(pointsOfAttempt--)
     pointsOfAttemptPlace.innerHTML = minusAttempt;
     if (minusAttempt == 0){
         for(let i = 0; i < 15; i++){
