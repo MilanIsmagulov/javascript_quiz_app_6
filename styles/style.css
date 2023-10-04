@@ -88,8 +88,8 @@ body{
     font-weight: 900;
     padding: 50px;
     margin-bottom: 20px;
-    margin-left: calc(25px + 5vh);
-    margin-right: calc(25px + 5vh);
+    margin-left: calc(10px + 5vh);
+    margin-right: calc(10px + 5vh);
     border-radius: 25px;
     border: 0px;
     cursor: pointer;
@@ -226,6 +226,7 @@ body{
 }
 
 .popup_body {
+    min-height: 90vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -294,4 +295,16 @@ body{
 .second_type_questions img{
     height: 550px;
     width: 400px;
+}
+
+.check_button.disable_answer_btn{
+    cursor: no-drop;
+    background-color: grey;
+    color: white;
+}
+
+.check_button.disable_answer_btn:active{
+    cursor: no-drop;
+    background-color: grey;
+    color: white;
 }

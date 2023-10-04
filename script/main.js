@@ -3,8 +3,8 @@ console.log('Script is loaded');
 
 // Объявление переменных HTML классы элементов
 const QuestionDiv = document.querySelector('.questions_cards_side');
-const pointsOfAttempt = 10;
 const pointsOfCorrectAnswers = [];
+
 
 // Создаваемые элементы в DOM
 let veryEasyQuestions = document.querySelector('.very_easy_questions');
@@ -12,139 +12,139 @@ let easyQuestions = document.querySelector('.easy_questions');
 let middleQuestions = document.querySelector('.middle_questions');
 let middleHardQuestions = document.querySelector('.middle_hard_questions');
 let HardQuestions = document.querySelector('.hard_questions');
-
 let PopUpWindow = document.querySelector('#popup_main_1');
 let closePopUpButton = document.querySelector('#close_popup_button_1');
 let correctMarkerPlace = document.querySelector('#correct_marker_1');
 
+
 // Вытаскиваем ID кнопок из HTML
-// let veryEasyQuestion1 = document.querySelector('#very_easy_question_1');
-// let veryEasyQuestion2 = document.querySelector('#very_easy_question_2');
-// let veryEasyQuestion3 = document.querySelector('#very_easy_question_3');
+let pointsOfAttempt = 10;
 let parseQuestionPlace = document.querySelector('#text_question_1');
-let pointsOfAttemptPlace= document.querySelector('#points_of_attempt_1');
+let pointsOfAttemptPlace = document.querySelector('#points_of_attempt_1');
 let popupsPart = document.querySelector('#popup_answers_1');
 
 
 // Массив с вопросами
-
 let mainQuestions = [
     {
-        text: '1) 2 + 2 = ?',
-        right: 0,
+        text: 'Под управлением технологическим процессом следует понимать.',
+        right: 1,
         type: 1,
         points: 100,
-        answers: ['3424', '234', '24', '23423433',],
+        answers: ['корректировка параметров процесса по результатам выборочного контроля параметров продукции для технологического обеспечения требуемого качества ', 'совокупность операций, необходимых для осуществления таких целей, как пуск и остановка технологического процесса, поддержание какого-либо параметра процесса на заданном уровне и т. п.', 'совокупность единичных операций образующих  конкретные технологические процессы и выполняющие определенные операции по пуску и остановке технологического процесса', ],
     },
     {
-        text: '2) 2 + 2 = ?',
-        right: 1,
-        type: 2,
+        text: 'Система автоматического управления образуют.',
+        right: 3,
+        type: 4,
         sourceImg: './content/03_01.png',
         points: 100,
-        answers: ['23424', '234234', '233', '333',],
+        answers: ['Управляющее устройство и органы воздействия <br> на объект управления', 'Объект управления и измерительный элемент', 'Объект управления и усилительный элемент', 'Объект управления и управляющее устройство',],
     },
     {
-        text: '3) 2 + 1 = ?',
+        text: 'Какую задачу выполняет устройство управления в системах по отклонению.',
+        right: 1,
+        type: 1,
+        points: 100,
+        answers: ['Измерения возмущающего воздействия и выработки регулирующего воздействия для его компенсации', 'Устранения отклонения управляемой величины от задающей', 'Измерения задающего воздействия и выработки на его основе регулирующего воздействия', 'Измерения задающего и возмущающего воздействий и выработки с учетом этих измерений регулирующего воздействия',],
+    },
+    {
+        text: 'К методам разрушения водонефтяных эмульсий относятся.',
+        right: 1,
+        type: 3,
+        points: 150,
+        answers: ['Электрохимический', 'Гидравлический', 'Механический', 'Динамический', 'Термохимический',],
+    },
+    {
+        text: 'По содержанию парафинов выделяют такие группы нефтей, как.',
+        right: 1,
+        type: 3,
+        points: 150,
+        answers: ['Малопарафинистые', 'Среднепарафинистые', 'Парафинистые', 'Высокопарафинистые',],
+    },
+    {
+        text: 'На какие группы классифицируются НПЗ по выпускаемой продукции.',
         right: 2,
         type: 3,
-        points: 100,
-        answers: ['222', '4444', '55555', '111',],
-    },
-    {
-        text: '4) 2 + 1 = ?',
-        right: 2,
-        type: 1,
+        // sourceImg: './content/03_01.png',
         points: 150,
-        answers: ['34234', '567', '789', '78979',],
+        answers: ['топливно-нефтехимического профиля', 'нефтехимического профиля', 'топливного профиля', 'масляного профиля', 'топливно-маляно-нефтехимического профиля', 'топливно-маслянного профиля',],
     },
     {
-        text: '5)2 + 1 = ?',
-        right: 2,
-        type: 1,
-        points: 150,
-        answers: ['667', '789789', '890098', '12312',],
-    },
-    {
-        text: '6) 2 + 1 = ?',
-        right: 2,
-        type: 2,
-        sourceImg: './content/03_01.png',
-        points: 150,
-        answers: ['2332', '54545', '354', '5445',],
-    },
-    {
-        text: '7) 2 + 1 = ?',
+        text: 'Разрушение эмульсий это основа какого процесса.',
         right: 2,
         type: 1,
         points: 200,
-        answers: ['7878', '23', '6565', '454',],
+        answers: ['Обессоливание', 'Стабилизация', 'Обезвоживание', 'Ректификация',],
     },
     {
-        text: '8) 2 + 1 = ?',
-        right: 2,
+        text: 'Какой процесс основан на искусственном создании водонефтяной эмульсии для последующего ее разрушения.',
+        right: 0,
         type: 1,
         points: 200,
-        answers: ['56656', '78', '8989', '8989',],
+        answers: ['Обессоливание', 'Стабилизация', 'Обезвоживание', 'Ректификация',],
     },
     {
-        text: '9) 2 + 1 = ?',
-        right: 2,
+        text: 'Процесс осуществляемый для сокращения потерь нефти при транспортировке.',
+        right: 1,
         type: 1,
         points: 200,
-        answers: ['456', '4564', '678', '9898',],
+        answers: ['Обессоливание', 'Стабилизация', 'Обезвоживание', 'Ректификация',],
     },
     {
-        text: '10) 2 + 1 = ?',
-        right: 2,
+        text: 'Какие процессы протекают на установках ЭЛОУ.',
+        right: [2 , 3],
+        type: 3,
+        points: 250,
+        answers: ['Стабилизация', 'Ректификация', 'Обессоливание', 'Обезвоживание',],
+    },
+    {
+        text: 'Какие процессы используют при осушке газа.',
+        right: 4,
         type: 1,
         points: 250,
-        answers: ['232', '90', '789', '3231',],
+        answers: ['Стабилизация', 'Ректификация ', 'Обессоливание', 'Обезвоживание', 'Абсорбция'],
     },
     {
-        text: '11) 2 + 1 = ?',
-        right: 2,
+        text: 'Какие установки применяются при большом содержании растворенных газов.',
+        right: 1,
         type: 1,
         points: 250,
-        answers: ['86', '8989', '900', '2121',],
+        answers: ['Одноколонные', 'Двухколонные', ],
     },
     {
-        text: '12) 2 + 1 = ?',
-        right: 2,
-        type: 1,
-        points: 250,
-        answers: ['5445', '7667', '9889', '2323',],
-    },
-    {
-        text: '13) 2 + 1 = ?',
-        right: 2,
+        text: 'Колонна, работа которой осуществляется при давлении выше атмосферного.',
+        right: 0,
         type: 1,
         points: 300,
-        answers: ['878', '5656', '6767', '434',],
+        answers: ['Атмосферная', 'Работающая под повышенным давлением', 'Вакуумная', ],
     },
     {
-        text: '14) 2 + 1 = ?',
-        right: 2,
+        text: 'Колонна, предназначенная для фракционирования мазута.',
+        right: 1,
         type: 1,
         points: 300,
-        answers: ['678678', '9898', '0909', '1221',],
+        answers: ['Атмосферная', 'Работающая под повышенным давлением', 'Вакуумная'],
     },
     {
-        text: ['JavaScript is', 'programming language'],
-        right: [0, 2,],
-        type: 4,
+        text: 'Колонна, работающая под давлением 1…4 МПа и применяется при стабилизации или отбензинивания.',
+        right: 1,
+        type: 1,
         points: 300,
-        answers: [2, 1,],
-        answers2: [2, 1,],
+        answers: ['Атмосферная', 'Работающая под повышенным давлением', 'Вакуумная'],
     },
 ];
+
+
 
 // const testType4 = `${mainQuestions[14].text[0]} <select>${mainQuestions[14].map(answer => `<option>${answer.answers}</option>`)}</select>`
 // console.log(testType4)
 
+
+
 // Цикл создающий модальные окна, также пушит вопросы и ответы
-for (i = 0; i < mainQuestions.length; i++ ){
-    
+for (i = 0; i < mainQuestions.length; i++){
+    pointsOfAttemptPlace.innerHTML = pointsOfAttempt;
     let popUpPlace = document.createElement('div');
     popUpPlace.classList.add('popup' , 'closed');
 
@@ -156,7 +156,7 @@ for (i = 0; i < mainQuestions.length; i++ ){
     popUpBody.id = 'popup_body_' + '_' + i;
 
     popUpPlace.appendChild(popUpBody);
-
+    
     let popUpContentWindow = document.createElement('div');
     popUpContentWindow.classList.add('popup_content');
     popUpContentWindow.id = 'popup_content' + '_' + i;
@@ -170,9 +170,8 @@ for (i = 0; i < mainQuestions.length; i++ ){
     let questionsPlace = document.createElement('div');
     questionsPlace.classList.add('questions');
     questionsPlace.id = 'question_number' + '_' + i;
-    if (mainQuestions[i].type !== 4){
-        questionsPlace.innerHTML = mainQuestions[i].text;
-    }
+    questionsPlace.innerHTML = mainQuestions[i].text;
+    
     
 
     popUpContentWindow.appendChild(closePopupButton);
@@ -217,6 +216,9 @@ for (i = 0; i < mainQuestions.length; i++ ){
             let answ = document.createElement('p');
             answ.innerHTML = answer;
             divInp.appendChild(answ);
+            if (mainQuestions[i].answers.length > 4){
+                divInp.classList.add('small');
+            }
         };
     };
 
@@ -249,6 +251,9 @@ for (i = 0; i < mainQuestions.length; i++ ){
             let answ = document.createElement('p');
             answ.innerHTML = answer;
             divInp.appendChild(answ);
+            if (mainQuestions[i].answers.length > 4){
+                divInp.classList.add('small');
+            }
         };
     };
 
@@ -266,18 +271,54 @@ for (i = 0; i < mainQuestions.length; i++ ){
     
             let input = document.createElement('input');
             input.type = 'checkbox';
-            input.name = i++;
+            input.name = j++;
+            input.dataset.answer = j++;
             divInp.appendChild(input);
             let answ = document.createElement('p');
             answ.innerHTML = answer;
             divInp.appendChild(answ);
+            if (mainQuestions[i].answers.length > 4){
+                divInp.classList.add('small');
+            }
         };
     };
 
 
-    // if(mainQuestions[i].type == 4){
-    //     answerPlace.innerHTML = mainQuestions[i].text 
-    // };
+    
+    if(mainQuestions[i].type == 4){
+        let mainWindow = document.createElement('div');
+        mainWindow.classList = ('second_type_questions');
+        mainWindow.id = 'second_type_question_' + i;
+        answerPlace.appendChild(mainWindow);
+
+        let secondTypeImg = document.createElement('img');
+        secondTypeImg.src = mainQuestions[i].sourceImg
+        mainWindow.appendChild(secondTypeImg);
+
+        let form = document.createElement('form');
+        mainWindow.appendChild(form);
+        form.dataset.right = mainQuestions[i].right;
+
+        for (let answer of mainQuestions[i].answers) {
+            let j = 0;
+            let divInp = document.createElement('div');
+            divInp.classList = ('answer_div');
+            form.appendChild(divInp);
+    
+            let input = document.createElement('input');
+            input.type = 'checkbox';
+            input.name = j++;
+            input.dataset.answer = j++;
+            divInp.appendChild(input);
+            let answ = document.createElement('p');
+            answ.innerHTML = answer;
+            divInp.appendChild(answ);
+            if (mainQuestions[i].answers.length > 4){
+                divInp.classList.add('small');
+            }
+        };
+    };
+
 
 
     let mainButtonsPlace = document.createElement('div');
@@ -295,34 +336,31 @@ for (i = 0; i < mainQuestions.length; i++ ){
 
 }; 
 
+let checkAnswerButton = document.querySelectorAll('.check_button');
+let forms = document.querySelectorAll('form');
+let cardsPlace = document.querySelector('.questions_cards_side');
+console.log(cardsPlace)
 
-for (i = 0; i < mainQuestions.length; i++ ){
-    let forms = document.querySelectorAll('form');
-    function checkAnswerFunction(i){
-        if (mainQuestions[i].type == 1){
-            
-            
-            for (let form of forms){
-                let inputs = form.querySelectorAll('input');
-                
-                for (let input of inputs){
-                    if (input.checked){
-                        if (input.dataset.answer == mainQuestions[i].right){
-                            console.log(1)
-                        }
-                    }
-                }
-            }
-        } else if(mainQuestions[i].type == 2){
-            console.log(2)
-        } else if(mainQuestions[i].type == 3){
-            console.log(3)
-        } else if(mainQuestions[i].type == 4){
-            console.log(4)
-        } else if(mainQuestions[i].type == 5){
-            console.log(5)
+function checkAnswerFunction(i){
+    let minusAttempt = pointsOfAttempt--
+    pointsOfAttemptPlace.innerHTML = minusAttempt;
+    if (minusAttempt == 0){
+        for(let i = 0; i < 15; i++){
+            checkAnswerButton[i].disabled = true;
+            checkAnswerButton[i].classList.add('disable_answer_btn');
         }
-    };
+        for(let i = 0; i < 5; i++){
+            for(let j = 0; j < 3; j++){
+                cardsPlace.children[i].children[j].disabled = true;
+            }
+        }
+    }
+
+    if (mainQuestions[i].type == 1 || mainQuestions[i].type == 2){
+        // console.log(4)
+    }else if(mainQuestions[i].type == 3 || mainQuestions[i].type == 4){
+        console.log(5)
+    }
 };
 
 
@@ -355,7 +393,19 @@ function showQuestion(i){
 };
 
 
-// 
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //     let i = 1;
 // // Рендер вопросов из списка
