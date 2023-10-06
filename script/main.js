@@ -199,6 +199,8 @@ for (i = 0; i < mainQuestions.length; i++){
 
     if(mainQuestions[i].type == 1){
         let form = document.createElement('form');
+        form.classList.add('answer_form');
+        form.id = 'answer_form_' + i;
         answerPlace.appendChild(form);
         form.dataset.right = mainQuestions[i].right;
     
@@ -211,7 +213,6 @@ for (i = 0; i < mainQuestions.length; i++){
             let input = document.createElement('input');
             input.type = 'radio';
             input.name = j++;
-            input.dataset.answer = j++;
             divInp.appendChild(input);
             let answ = document.createElement('p');
             answ.innerHTML = answer;
@@ -234,6 +235,8 @@ for (i = 0; i < mainQuestions.length; i++){
         mainWindow.appendChild(secondTypeImg);
 
         let form = document.createElement('form');
+        form.classList.add('answer_form');
+        form.id = 'answer_form_' + i;
         mainWindow.appendChild(form)
         form.dataset.right = mainQuestions[i].right;
 
@@ -244,9 +247,9 @@ for (i = 0; i < mainQuestions.length; i++){
             form.appendChild(divInp);
     
             let input = document.createElement('input');
+            input.
             input.type = 'radio';
             input.name = j++;
-            input.dataset.answer = j++;
             divInp.appendChild(input);
             let answ = document.createElement('p');
             answ.innerHTML = answer;
@@ -260,6 +263,8 @@ for (i = 0; i < mainQuestions.length; i++){
 
     if(mainQuestions[i].type == 3){
         let form = document.createElement('form');
+        form.classList.add('answer_form');
+        form.id = 'answer_form_' + i;
         answerPlace.appendChild(form);
         form.dataset.right = mainQuestions[i].right;
     
@@ -272,7 +277,6 @@ for (i = 0; i < mainQuestions.length; i++){
             let input = document.createElement('input');
             input.type = 'checkbox';
             input.name = j++;
-            input.dataset.answer = j++;
             divInp.appendChild(input);
             let answ = document.createElement('p');
             answ.innerHTML = answer;
@@ -296,6 +300,8 @@ for (i = 0; i < mainQuestions.length; i++){
         mainWindow.appendChild(secondTypeImg);
 
         let form = document.createElement('form');
+        form.classList.add('answer_form');
+        form.id = 'answer_form_' + i;
         mainWindow.appendChild(form);
         form.dataset.right = mainQuestions[i].right;
 
@@ -308,7 +314,6 @@ for (i = 0; i < mainQuestions.length; i++){
             let input = document.createElement('input');
             input.type = 'checkbox';
             input.name = j++;
-            input.dataset.answer = j++;
             divInp.appendChild(input);
             let answ = document.createElement('p');
             answ.innerHTML = answer;
@@ -339,11 +344,19 @@ for (i = 0; i < mainQuestions.length; i++){
 let checkAnswerButton = document.querySelectorAll('.check_button');
 let forms = document.querySelectorAll('form');
 let cardsPlace = document.querySelector('.questions_cards_side');
-console.log(cardsPlace)
+
+
+let formsForAnswers = document.querySelectorAll('.answer_form');
+formsForAnswers.forEach((elem, index)=>{
+    let answerInput = document.querySelectorAll('.answer_div')
+    console.log(elem)
+})
+
+
 
 function checkAnswerFunction(i){
     let minusAttempt = pointsOfAttempt--
-    console.log(pointsOfAttempt--)
+    
     pointsOfAttemptPlace.innerHTML = minusAttempt;
     if (minusAttempt == 0){
         for(let i = 0; i < 15; i++){
@@ -357,10 +370,15 @@ function checkAnswerFunction(i){
         }
     }
 
+
     if (mainQuestions[i].type == 1 || mainQuestions[i].type == 2){
-        // console.log(4)
+
+        
+
+
     }else if(mainQuestions[i].type == 3 || mainQuestions[i].type == 4){
-        console.log(5)
+        console.log('click2')
+
     }
 };
 
