@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/style.css">
     <script src="./script/main.js" defer></script>
+    <script src="./script/create-elements.js" defer></script>
     <title>Своя игра</title>
 </head>
 <body>
@@ -26,42 +27,39 @@
             </p>
             <div class="questions_cards_side">
                 <div class="very_easy_questions">
-                    <button id="very_easy_question_1">
-                        <div class="correct_marker" id="correct_marker_1"></div>
-                        100
-                    </button>
-                    <button id="very_easy_question_2">100</button>
-                    <button id="very_easy_question_3">100</button>
+                    <button class="question id0">100</button>
+                    <button class="question id1">100</button>
+                    <button class="question id2">100</button>
                 </div>
                 <div class="easy_questions">
-                    <button id="easy_question_1">150</button>
-                    <button id="easy_question_2">150</button>
-                    <button id="easy_question_3">150</button>
+                    <button class="question id3">150</button>
+                    <button class="question id4">150</button>
+                    <button class="question id5">150</button>
                 </div>
                 <div class="middle_questions">
-                    <button id="middle_question_1">200</button>
-                    <button id="middle_question_2">200</button>
-                    <button id="middle_question_3">200</button>
+                    <button class="question id6">200</button>
+                    <button class="question id7">200</button>
+                    <button class="question id8">200</button>
                 </div>
                 <div class="middle_hard_questions">
-                    <button id="middle_hard_question_1">250</button>
-                    <button id="middle_hard_question_2">250</button>
-                    <button id="middle_hard_question_3">250</button>
+                    <button class="question id9">250</button>
+                    <button class="question id10">250</button>
+                    <button class="question id11">250</button>
                 </div>
                 <div class="hard_questions">
-                    <button id="hard_question_1">300</button>
-                    <button id="hard_question_2">300</button>
-                    <button id="hard_question_3">300</button>
+                    <button class="question id12">300</button>
+                    <button class="question id13">300</button>
+                    <button class="question id14">300</button>
                 </div>
             </div>
             <div class="scoring_side">
                 <div class="number_of_points">
                     <p>Количество очков</p>
-                    <p class="points" id="points_of_correct_1">0</p>
+                    <p class="points" id="score">0</p>
                 </div>
                 <div class="number_of_points">
                     <p>Количество попыток</p>
-                    <p class="points" id="points_of_attempt_1">10</p>
+                    <p class="points" id="lives">10</p>
                 </div>
             </div>
         </div>
@@ -69,34 +67,8 @@
             <img src="./content/logo_of_profi.png" alt="">
         </div>
     </div>
-    <div id="popup_main_1" class="popup closed">
-        <div class="popup_body">
-            <div class="popup_content">
-                <div class="close_popup">
-                    <div class="questions" id="question_number_1">
-                            
-                    </div>
-                    <button id="close_popup_button_1" class="close_popup_button">
-                        <img src="./content/close.svg" alt="close_popup">
-                    </button>
-                </div>
-                <div class="answers_btn" id="answers_buttons1">
-                            
-                </div>
-                <div class="main_buttons">
-                    <button id="check_button_1">
-                        Ответить
-                    </button>
-                    <button id="check_button_2">
-                        Повторить
-                    </button>
-                    <button id="check_button_3">
-                        Далее
-                    </button>
-                    <p>За этот вопрос вы можете получить 100 Очков</p>
-                </div>
-            </div>
-        </div>
+    <div id="popup_window" class="popup closed"> 
+        
     </div>
 </body>
 </html>
