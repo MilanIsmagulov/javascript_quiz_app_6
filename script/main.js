@@ -403,11 +403,21 @@ for (i = 0; i < mainQuestions.length; i++){
             pointsOfCorrectAnswers.push(mainQuestions[question_number].points)
             updatescore()
             event.target.parentNode.innerHTML="<p> За этот вопрос вы могли получили " + mainQuestions[question_number].points + " очков </p>"
+
+		//Добавление галочки пройдено
+            let imgCorrect = document.createElement('img')
+            imgCorrect.src = './content/correct.svg'
+            document.querySelector('[onclick="showQuestion(' + question_number +')"').appendChild(imgCorrect);
+            
+
         }
-        else{
+        else
+	{
+            //Добавление крестика неправильного ответа
             event.target.parentNode.innerHTML="<p> За этот вопрос вы могли получить " + mainQuestions[question_number].points + " очков </p>"
-
-
+            let imgCorrect = document.createElement('img');
+            imgCorrect.src = './content/incorrect.svg';
+            document.querySelector('[onclick="showQuestion(' + question_number +')"').appendChild(imgCorrect);
         }
 
     })
