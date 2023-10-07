@@ -351,12 +351,14 @@ for (i = 0; i < mainQuestions.length; i++){
         pointsOfAttemptPlace.innerHTML = minusAttempt;
         if (minusAttempt < 1)
         {
-            //Вырубает кнопку ответа
-            for(let i = 0; i < 15; i++){
-                checkAnswerButton[i].disabled = true;
-                checkAnswerButton[i].classList.add('disable_answer_btn');
+            //Отключение кнопок ответа
+            for(let elem of document.querySelectorAll('.check_button')){
+                
+                elem.disabled = true;
+                elem.classList.add('disable_answer_btn');
                 
             }
+            // Отключение кнопок вопросов 
             for(let i = 0; i < 5; i++){
                 for(let j = 0; j < 3; j++){
                     cardsPlace.children[i].children[j].disabled = true;
