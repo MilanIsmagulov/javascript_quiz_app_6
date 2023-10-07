@@ -28,14 +28,14 @@ let popupsPart = document.querySelector('#popup_answers_1');
 let mainQuestions = [
     {
         text: 'Под управлением технологическим процессом следует понимать.',
-        right: 1,
+        right: [1],
         type: 1,
         points: 100,
         answers: ['корректировка параметров процесса по результатам выборочного контроля параметров продукции для технологического обеспечения требуемого качества ', 'совокупность операций, необходимых для осуществления таких целей, как пуск и остановка технологического процесса, поддержание какого-либо параметра процесса на заданном уровне и т. п.', 'совокупность единичных операций образующих  конкретные технологические процессы и выполняющие определенные операции по пуску и остановке технологического процесса', ],
     },
     {
         text: 'Система автоматического управления образуют.',
-        right: 3,
+        right: [3],
         type: 4,
         sourceImg: './content/03_01.png',
         points: 100,
@@ -43,28 +43,28 @@ let mainQuestions = [
     },
     {
         text: 'Какую задачу выполняет устройство управления в системах по отклонению.',
-        right: 1,
+        right: [1],
         type: 1,
         points: 100,
         answers: ['Измерения возмущающего воздействия и выработки регулирующего воздействия для его компенсации', 'Устранения отклонения управляемой величины от задающей', 'Измерения задающего воздействия и выработки на его основе регулирующего воздействия', 'Измерения задающего и возмущающего воздействий и выработки с учетом этих измерений регулирующего воздействия',],
     },
     {
         text: 'К методам разрушения водонефтяных эмульсий относятся.',
-        right: 1,
+        right: [1],
         type: 3,
         points: 150,
         answers: ['Электрохимический', 'Гидравлический', 'Механический', 'Динамический', 'Термохимический',],
     },
     {
         text: 'По содержанию парафинов выделяют такие группы нефтей, как.',
-        right: 1,
+        right: [1],
         type: 3,
         points: 150,
         answers: ['Малопарафинистые', 'Среднепарафинистые', 'Парафинистые', 'Высокопарафинистые',],
     },
     {
         text: 'На какие группы классифицируются НПЗ по выпускаемой продукции.',
-        right: 2,
+        right: [2],
         type: 3,
         // sourceImg: './content/03_01.png',
         points: 150,
@@ -72,21 +72,21 @@ let mainQuestions = [
     },
     {
         text: 'Разрушение эмульсий это основа какого процесса.',
-        right: 2,
+        right: [2],
         type: 1,
         points: 200,
         answers: ['Обессоливание', 'Стабилизация', 'Обезвоживание', 'Ректификация',],
     },
     {
         text: 'Какой процесс основан на искусственном создании водонефтяной эмульсии для последующего ее разрушения.',
-        right: 0,
+        right: [0],
         type: 1,
         points: 200,
         answers: ['Обессоливание', 'Стабилизация', 'Обезвоживание', 'Ректификация',],
     },
     {
         text: 'Процесс осуществляемый для сокращения потерь нефти при транспортировке.',
-        right: 1,
+        right: [1],
         type: 1,
         points: 200,
         answers: ['Обессоливание', 'Стабилизация', 'Обезвоживание', 'Ректификация',],
@@ -100,35 +100,35 @@ let mainQuestions = [
     },
     {
         text: 'Какие процессы используют при осушке газа.',
-        right: 4,
+        right: [4],
         type: 1,
         points: 250,
         answers: ['Стабилизация', 'Ректификация ', 'Обессоливание', 'Обезвоживание', 'Абсорбция'],
     },
     {
         text: 'Какие установки применяются при большом содержании растворенных газов.',
-        right: 1,
+        right: [1],
         type: 1,
         points: 250,
         answers: ['Одноколонные', 'Двухколонные', ],
     },
     {
         text: 'Колонна, работа которой осуществляется при давлении выше атмосферного.',
-        right: 0,
+        right: [0],
         type: 1,
         points: 300,
         answers: ['Атмосферная', 'Работающая под повышенным давлением', 'Вакуумная', ],
     },
     {
         text: 'Колонна, предназначенная для фракционирования мазута.',
-        right: 1,
+        right: [1],
         type: 1,
         points: 300,
         answers: ['Атмосферная', 'Работающая под повышенным давлением', 'Вакуумная'],
     },
     {
         text: 'Колонна, работающая под давлением 1…4 МПа и применяется при стабилизации или отбензинивания.',
-        right: 1,
+        right: [1],
         type: 1,
         points: 300,
         answers: ['Атмосферная', 'Работающая под повышенным давлением', 'Вакуумная'],
@@ -196,11 +196,13 @@ for (i = 0; i < mainQuestions.length; i++){
 
     popUpContentWindow.appendChild(answerPlace);
 
-
+//Один ответ без картинки 
     if(mainQuestions[i].type == 1){
+
         let form = document.createElement('form');
         form.classList.add('answer_form');
         form.id = 'answer_form_' + i;
+        
         answerPlace.appendChild(form);
         form.dataset.right = mainQuestions[i].right;
     
@@ -223,7 +225,7 @@ for (i = 0; i < mainQuestions.length; i++){
         };
     };
 
-
+//Подозреваю, что несколько ответов и картинка
     if(mainQuestions[i].type == 2){
         let mainWindow = document.createElement('div');
         mainWindow.classList = ('second_type_questions');
@@ -260,7 +262,7 @@ for (i = 0; i < mainQuestions.length; i++){
         };
     };
 
-
+//Несколько ответов без картинки
     if(mainQuestions[i].type == 3){
         let form = document.createElement('form');
         form.classList.add('answer_form');
@@ -288,7 +290,7 @@ for (i = 0; i < mainQuestions.length; i++){
     };
 
 
-    
+    //Один ответ одна картинка
     if(mainQuestions[i].type == 4){
         let mainWindow = document.createElement('div');
         mainWindow.classList = ('second_type_questions');
@@ -325,21 +327,99 @@ for (i = 0; i < mainQuestions.length; i++){
     };
 
 
-
     let mainButtonsPlace = document.createElement('div');
     mainButtonsPlace.classList.add('main_buttons');
     answerPlace.appendChild(mainButtonsPlace);
 
+    
     let checkAnswerBtn = document.createElement('button');
     checkAnswerBtn.classList.add('check_button');
     checkAnswerBtn.id = 'check_button' + '_' + i;
     checkAnswerBtn.innerHTML = 'Ответить';
-    checkAnswerBtn.setAttribute('onclick', 'checkAnswerFunction'+ '(' + i + ')');
+
+    //Добавление ивента для проверки ответов
+
+    checkAnswerBtn.addEventListener('click',function(event)
+    {
+        let minusAttempt = pointsOfAttempt--
+        let rightcheck =true
+        
+        if (minusAttempt < 0)
+        { 
+            return 0;//добавлено, чтобы после измены html кода disabled , проверка ответа не происходила. (простыми словами завершение функции)
+        }
+        pointsOfAttemptPlace.innerHTML = minusAttempt;
+        if (minusAttempt < 1)
+        {
+            //Вырубает кнопку ответа
+            for(let i = 0; i < 15; i++){
+                checkAnswerButton[i].disabled = true;
+                checkAnswerButton[i].classList.add('disable_answer_btn');
+                
+            }
+            for(let i = 0; i < 5; i++){
+                for(let j = 0; j < 3; j++){
+                    cardsPlace.children[i].children[j].disabled = true;
+                }
+            }
+            
+        }
+
+        //Блок проверки
+
+
+        //Получения номера вопроса и блока вопросов
+        let questionsblock = event.target.parentNode.parentNode.firstElementChild
+        let question_number = questionsblock.id.split('_')
+        question_number=question_number[question_number.length-1]
+        
+
+        //Обработка
+        let counter=0 // Для получения порядкового номера
+        for (let elem of questionsblock.querySelectorAll(".answer_div")) 
+		{
+            if(elem.firstElementChild.checked){
+                // Проверка есть ли в массиве правильных ответов этот вариант ответа(counter)
+                if (mainQuestions[question_number].right.indexOf(counter) != -1){
+                    elem.classList.add('correct')
+                }
+                else
+                {
+                    elem.classList.add('incorrect')
+                    rightcheck=false
+                }
+            }
+            else{
+                //Выделение правильных ответов, если они не выбраны
+                if (mainQuestions[question_number].right.indexOf(counter) != -1){
+                    elem.classList.add('correct')
+                }
+            }
+            counter++
+        }
+        if (rightcheck){
+            //В случае правильного ответа
+            //Не знаю зачем нужен именно массив правильных очков, но допустим
+            pointsOfCorrectAnswers.push(mainQuestions[question_number].points)
+            updatescore()
+            event.target.parentNode.innerHTML="<p> За этот вопрос вы могли получили " + mainQuestions[question_number].points + " очков </p>"
+        }
+        else{
+            event.target.parentNode.innerHTML="<p> За этот вопрос вы могли получить " + mainQuestions[question_number].points + " очков </p>"
+
+
+        }
+
+    })
+
+
     mainButtonsPlace.innerHTML = '<p>' + 'За этот вопрос вы можете получить ' + mainQuestions[i].points + ' очков' + '</p>' + '<br>';
 
     mainButtonsPlace.appendChild(checkAnswerBtn);
-
+    
 }; 
+//--------------------------------
+
 
 let checkAnswerButton = document.querySelectorAll('.check_button');
 let forms = document.querySelectorAll('form');
@@ -353,23 +433,28 @@ formsForAnswers.forEach((elem, index)=>{
 })
 
 
-
+/*Проверка ответов, обработчик добавляется в создании форм(Не используется)
 function checkAnswerFunction(i){
     let minusAttempt = pointsOfAttempt--
-    
+    if (minusAttempt < 0)
+    { 
+        return 0;//добавлено, чтобы после измены html кода disabled , проверка ответа не происходила. (простыми словами завершение функции)
+    }
     pointsOfAttemptPlace.innerHTML = minusAttempt;
-    if (minusAttempt == 0){
+    if (minusAttempt < 1){
+        //Вырубает кнопку ответа
         for(let i = 0; i < 15; i++){
             checkAnswerButton[i].disabled = true;
             checkAnswerButton[i].classList.add('disable_answer_btn');
+            
         }
         for(let i = 0; i < 5; i++){
             for(let j = 0; j < 3; j++){
                 cardsPlace.children[i].children[j].disabled = true;
             }
         }
+        
     }
-
 
     if (mainQuestions[i].type == 1 || mainQuestions[i].type == 2){
 
@@ -380,7 +465,9 @@ function checkAnswerFunction(i){
         console.log('click2')
 
     }
+
 };
+*/
 
 
 // Новые переменные связанные с созданными Модальными окнами
@@ -413,8 +500,16 @@ function showQuestion(i){
 
 
 
+//Сложение очков, для получения счёта( я не знаю зачем тут нужен был массив)
+function updatescore(){
+    let score=0
+    pointsOfCorrectAnswers.forEach(element => {
+        score+=element
+    
+    });
+    document.getElementById('points_of_correct_1').innerHTML=score
 
-
+}
 
 
 
