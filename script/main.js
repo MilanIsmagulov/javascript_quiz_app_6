@@ -178,19 +178,6 @@ for (i = 0; i < mainQuestions.length; i++){
 
     closePopupButton.appendChild(questionsPlace);
 
-    let closeButton = document.createElement('button');
-    closeButton.addEventListener('click', function(){
-        popUpPlace.classList.add('closed');
-        popUpPlace.classList.remove('open');
-    });
-
-    closeButton.classList.add('close_popup_button');
-    closeButton.id = 'close_popup_button' + '_' + i;
-    closeButton.innerHTML = '<img src="./content/close.svg" alt="close_popup">';
-    closeButton.style.display="none";
-
-    closePopupButton.appendChild(closeButton);
-
     let answerPlace = document.createElement('div');
     answerPlace.classList.add('answers_btn');
     answerPlace.id = 'answers_buttons' + '_' + i;
@@ -409,7 +396,20 @@ for (i = 0; i < mainQuestions.length; i++){
             }
             counter++
         }
-        document.getElementById('close_popup_button_'+question_number).style.display="";
+        //Создание кнопки закрытия
+        let popUpPlace = document.getElementById('popup_' + question_number);
+        let closeButton = document.createElement('button');
+        closeButton.addEventListener('click', function(){
+            popUpPlace.classList.add('closed');
+            popUpPlace.classList.remove('open');
+        });
+
+        closeButton.classList.add('close_popup_button');
+        closeButton.id = 'close_popup_button' + '_' + i;
+        closeButton.innerHTML = '<img src="./content/close.svg" alt="close_popup">';
+        document.getElementById('popup_content_'+question_number).firstElementChild.appendChild(closeButton);
+
+        
 
 
         if (rightcheck){
