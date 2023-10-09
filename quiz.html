@@ -9,66 +9,101 @@
     <title>Своя игра</title>
 </head>
 <body>
-    <div class="upper_side">
-        <div class="black_header">
-            <h1>
-                Своя игра
-            </h1>
-            <div class="links_black_header">
-                <a href="../../../../index.html">На главную</a>
-                <a href="../../../new_material/page_new_mat.html">Назад</a>
+
+    <header>
+        <div class="header_wrap">
+            <div class="header-title">
+                <h1>Своя игра</h1>
+            </div>
+            <div class="header_links">
+                <a href="#">На главную</a>
+                <a href="#">Назад</a>
             </div>
         </div>
-    </div>
-    <div class="main_window">
-        <div class="left_side">
-            <p class="left_side_text">
-                Перед вами задания разных уровней сложности. У вас 10 попыток, чтобы получить призовые 1550 очков. Кликните на карточку, чтобы перейти к заданию. Выберите вариант (варианты) ответа и нажмите кнопку «Ответить»
-            </p>
-            <div class="questions_cards_side">
+    </header>
+
+    <div class="main_wrap">
+        <div class="question_wrap">
+            <div class="text_wrap">
+                <p class="welcome_text">Перед вами задания разных уровней сложности. У вас 10 попыток, чтобы получить призовые 1550 очков. Кликните на карточку, чтобы перейти к заданию. Выберите вариант (варианты) ответа и нажмите кнопку «Ответить»</p>
+            </div>
+            <div class="buttons_box">
                 <div class="very_easy_questions">
-                    <button class="question id0">100</button>
-                    <button class="question id1">100</button>
-                    <button class="question id2">100</button>
+                    <div class="question id0">
+                        <button>100</button>
+                    </div>
+                    <div class="question id1">
+                        <button>100</button>
+                    </div>
+                    <div class="question id2">
+                        <button>100</button>
+                    </div>
                 </div>
                 <div class="easy_questions">
-                    <button class="question id3">150</button>
-                    <button class="question id4">150</button>
-                    <button class="question id5">150</button>
+                    <div class="question id3">
+                        <button>150</button>
+                    </div>
+                    <div class="question id4">
+                        <button>150</button>
+                    </div>
+                    <div class="question id5">
+                        <button>150</button>
+                    </div>
                 </div>
                 <div class="middle_questions">
-                    <button class="question id6">200</button>
-                    <button class="question id7">200</button>
-                    <button class="question id8">200</button>
+                    <div class="question id6">
+                        <button>200</button>
+                    </div>
+                    <div class="question id7">
+                        <button>200</button>
+                    </div>
+                    <div class="question id8">
+                        <button>200</button>
+                    </div>
                 </div>
                 <div class="middle_hard_questions">
-                    <button class="question id9">250</button>
-                    <button class="question id10">250</button>
-                    <button class="question id11">250</button>
+                    <div class="question id0">
+                        <button>250</button>
+                    </div>
+                    <div class="question id1">
+                        <button>250</button>
+                    </div>
+                    <div class="question id2">
+                        <button>250</button>
+                    </div>
                 </div>
                 <div class="hard_questions">
-                    <button class="question id12">300</button>
-                    <button class="question id13">300</button>
-                    <button class="question id14">300</button>
+                    <div class="question id0">
+                        <button>300</button>
+                    </div>
+                    <div class="question id1">
+                        <button>300</button>
+                    </div>
+                    <div class="question id2">
+                        <button>300</button>
+                    </div>
                 </div>
             </div>
-            <div class="scoring_side">
-                <div class="number_of_points">
+            <div class="score_wrap">
+                <div class="count_point">
                     <p>Количество очков</p>
                     <p class="points" id="score">0</p>
                 </div>
-                <div class="number_of_points">
+                <div class="count_try">
                     <p>Количество попыток</p>
-                    <p class="points" id="lives">10</p>
+                    <p class="tryes" id="lives">10</p>
                 </div>
             </div>
         </div>
-        <div class="right_side">
-            <img src="./content/logo_of_profi.png" alt="">
+        <div class="logo_wrap">
+            <img src="content/logo_of_profi.png" alt="logo">
         </div>
     </div>
+
     <div id="popup_window" class="popup closed"> 
+
         
+
     </div>
 </body>
 </html>

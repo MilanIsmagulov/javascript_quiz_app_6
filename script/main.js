@@ -21,7 +21,7 @@ let questionType5 = document.getElementById("question_type_5");
 // Массив с вопросами
 let allQuestions = [
     {
-        type: 1, 
+        type: 0, 
         price: 100,
         text: 'На какой свет можно ехать?',
         image: null,
@@ -30,7 +30,16 @@ let allQuestions = [
         answered: null, // какой вариант ответа выбрал пользователь
     },
     {
-        type: 1, 
+        type: 0, 
+        price: 100,
+        text: 'Сколько у него зубов?',
+        image: "content/dog.jpg",
+        answers: ['Тридцать два', 'Сорок два', 'Шестьдесят четыре', 'Два миллиона восемьсот двадцать один',],
+        correctAnswer: [1], // id правильного ответа из поля answers
+        answered: null, // какой вариант ответа выбрал пользователь
+    },
+    {
+        type: 0, 
         price: 100,
         text: 'Сколько у него зубов?',
         image: "content/dog.jpg",
@@ -40,20 +49,42 @@ let allQuestions = [
     },
     {
         type: 1, 
-        price: 100,
-        text: 'Сколько у него зубов?',
-        image: "content/dog.jpg",
-        answers: ['Тридцать два', 'Сорок два', 'Шестьдесят четыре', 'Два миллиона восемьсот двадцать один',],
-        correctAnswer: [1], // id правильного ответа из поля answers
-        answered: null, // какой вариант ответа выбрал пользователь
-    },
-    {
-        type: 2, 
         price: 150,
         text: 'Выберите имена ученых:',
         image: null,
         answers: ['Игорь Юрьев', 'Вячеслав Казанцев', 'Иван', 'Денис Саликов', 'Люся Генриховна', 'Алишер Батут'],
         correctAnswer: [2,3], // id правильного ответа из поля answers
+        answered: null, // какой вариант ответа выбрал пользователь
+    },
+    {
+        type: 1, 
+        price: 150,
+        text: 'Выберите имена ученых:',
+        image: null,
+        answers: ['Игорь Юрьев', 'Вячеслав Казанцев', 'Иван', 'Денис Саликов', 'Люся Генриховна', 'Алишер Батут'],
+        correctAnswer: [2,3], // id правильного ответа из поля answers
+        answered: null, // какой вариант ответа выбрал пользователь
+    },
+    {
+        type: 1, 
+        price: 150,
+        text: 'Выберите имена ученых:',
+        image: null,
+        answers: ['Игорь Юрьев', 'Вячеслав Казанцев', 'Иван', 'Денис Саликов', 'Люся Генриховна', 'Алишер Батут'],
+        correctAnswer: [2,3], // id правильного ответа из поля answers
+        answered: null, // какой вариант ответа выбрал пользователь
+    },
+    {
+        type: 2, 
+        price: 200,
+        text: 'Вставте пропущенные слова:',
+        textDd: "Семен Морозов родился в |. Он разработал свою первую штуку в | году. "+
+                    "Благодаря этой разработке, все | мира могут спать спокойно",
+        image: null,
+        answers: [["Узбекистане", "Ираке", "России"],
+                ["1950","3572","824"],
+                ["коты","жители","суслики"]],
+        correctAnswer: [2,0,1], // id правильного ответа из поля answers
         answered: null, // какой вариант ответа выбрал пользователь
     },
 ]; 
@@ -82,17 +113,53 @@ document.addEventListener('DOMContentLoaded', function(){
             popUpQuestionOpen(this);
         });
     }
+    // DEBUGGING
+
+    // Открытие меню выбора ответа
+    document.getElementById("custom-dropdown-input-0").addEventListener('click', function(e){
+        
+        e.target.parentNode.parentNode.getElementsByClassName("custom-dropdown-select")[0].classList.toggle("closed");
+    });
+    
 });
 
-// Обработчик события, если нажали на кнопку "Ответить"
+// Обработчик события, если нажали на кнопку "Ответить". Собираем ответы
 function submitHandler(e){
     e.preventDefault();
 
-    let answers = [];
-    for (el of e.target) if(el.checked) answers.push(parseInt(el.value));
-    
-    userAnswered(answers);
+    let answers = getUserAnswers(e);
+        
+    console.log(`user answers: ${answers}`);
+    userAnswersHandler(answers);
     popUpQuestionClose();
+}
+
+function getUserAnswers(el){
+    let arr = [];
+
+    if (currentQuestionType == 3) {
+        // answers type 3
+    }else if (currentQuestionType == 2){
+        let textAnsw = []
+        let trueAnsw = allQuestions[currentIdQuestion].answers;
+
+        for (el of el.target.getElementsByClassName("custom-dropdown-input-placeholder")) 
+            textAnsw.push(el.innerHTML);
+
+        for (let i = 0; i < trueAnsw.length; i++){
+            for (let j = 0; j < trueAnsw[i].length; j++){
+                if (textAnsw[i] == trueAnsw[i][j]) arr.push(j);
+            }
+        }
+                
+
+        console.log(arr);
+        
+    }else {
+        for (el of el.target) if(el.checked) arr.push(parseInt(el.value));
+    }
+
+    return arr;
 }
 
 // Функция установки состояния вопроса: Пройден(1), Не пройден(0).
@@ -148,13 +215,14 @@ function questionIsPassed(question){
 }
 
 // Функция, обрабатывающая ответ пользователя
-function userAnswered(userAnswers){
+function userAnswersHandler(userAnswers){
     let currentQuestion = allQuestions[currentIdQuestion];
 
     // Записываем ответ пользователя в соответствующее поле объекта вопроса
     currentQuestion.answered = userAnswers;
     // Проверяем, верный ли был ответ, ставим соответсвующее изображение на кнопку
     isCorrect = answerIsCorrect(currentQuestion, userAnswers);
+    console.log(`IS CORRECT? ${isCorrect}`);
 
     if (isCorrect) {
         setStateToQuestion(currentQuestionButton, 1);
@@ -178,6 +246,8 @@ function answerIsCorrect(question, userAnswers){
 
     return false;
 }
+
+// Функция для 2 типа вопросов.
 
 
 

@@ -1,8 +1,4 @@
-
-
-
 function createPopUpMain(question){
-
     let el = document.createElement("div");
     el.setAttribute("class", "popup_main");
     el.setAttribute("id", "popup_main");
@@ -11,26 +7,27 @@ function createPopUpMain(question){
     elChB.setAttribute("id", "popup_content");
     el.appendChild(elChB);
 
+    elChB.appendChild(createHeaderPopUp(question));
 
     switch(question.type) {
-        case 1:
-            elChB.appendChild(createHeaderPopUp(question));
+        case 0:
+            
             elChB.appendChild(createBodyPopUp_Type1(question));
             break;
 
+        case 1:;
+            elChB.appendChild(createBodyPopUp_Type2(question));
+            break;
+
         case 2:
-            constuctQuestionType2(question);
+            elChB.appendChild(createBodyPopUp_Type3(question));
             break;
 
         case 3:
-            constuctQuestionType3(question);
-            break;
-
-        case 4:
             constuctQuestionType4(question);
             break;
 
-        case 5:
+        case 4:
             constuctQuestionType5(question);
             break;
       
@@ -73,7 +70,7 @@ function createBottomPopUp(question){
     el.setAttribute("class", "popup_bottom");
     el.setAttribute("id", "popup_bottom");
     let elChB = document.createElement("input");
-    elChB.setAttribute("id", "post_answ_type_2");
+    elChB.setAttribute("id", "post_answ");
     elChB.setAttribute("type", "submit");
     elChB.setAttribute("value", "Ответить");
     el.appendChild(elChB);
@@ -90,6 +87,7 @@ function deletePopUpMain(){
     if(document.getElementById("popup_main") != null)
         document.getElementById("popup_main").remove();
 }
+
 
 
 
@@ -128,15 +126,11 @@ function createAnswer_Type1(question, i){
     el.appendChild(elChD);
 
     if (questionIsPassed(question)){
-        console.log("passed");
-        console.log(question);
-        console.log(question.answered);
-        console.log(question.answered.includes(i, 0));
+
         elChB.setAttribute("class", "disabled_input");
         if(question.answered.includes(i, 0)) {
             elChB.checked = true;
         }
-        //
     }
     
     return el;
@@ -162,4 +156,135 @@ function createImgDiv_Type1(question){
     el.appendChild(img);
 
     return el;
+}
+
+function createBodyPopUp_Type2(question){
+    let el = document.createElement("div");
+    el.setAttribute("class", "question_type_2_body");
+    el.setAttribute("id", "question_type_2");
+    let elChB = document.createElement("form");
+    elChB.setAttribute("style", "width: 100%;");
+    let elChBChB = document.createElement("div");
+    elChBChB.setAttribute("class", "question_type_2_radio");
+    elChB.appendChild(elChBChB);
+    el.appendChild(elChB);
+
+    elChBChB.appendChild(createAnswers_Type2(question));
+
+    if (!questionIsPassed(question)) elChB.appendChild(createBottomPopUp(question));
+
+    return el;
+}
+function createAnswer_Type2(question, i){
+    let el = document.createElement("div");
+    let elChB = document.createElement("input");
+    elChB.setAttribute("type", "checkbox");
+    elChB.setAttribute("value", `${i}`);
+    el.appendChild(elChB);
+    let elChD = document.createElement("p");
+    elChD.setAttribute("id", `question_type_2_answer_${i}`);
+    let elChDChA = document.createTextNode(`${question.answers[i]}`);
+    elChD.appendChild(elChDChA);
+    el.appendChild(elChD);
+
+    if (questionIsPassed(question)){
+        elChB.setAttribute("class", "disabled_input");
+        if(question.answered.includes(i, 0)) {
+            elChB.checked = true;
+        }
+    }
+
+    return el;
+}
+function createAnswers_Type2(question){
+    let el = document.createElement("div");
+    el.setAttribute("class", "question_type_2_answers");
+    el.setAttribute("id", "question_type_2_answers");
+
+    for (let i = 0; i < question.answers.length; i++) {
+        el.appendChild(createAnswer_Type2(question, i));
+    }
+
+    return el;
+}
+
+function createBodyPopUp_Type3(question){
+    let el = document.createElement("div");
+    el.setAttribute("class", "question_type_3_body");
+    el.setAttribute("id", "question_type_3");
+    let elChB = document.createElement("form");
+    elChB.setAttribute("style", "width: 100%;");
+    let elChBChB = document.createElement("div");
+    elChBChB.setAttribute("class", "question_type_3_dropdown");
+    let elChBChBChB = document.createElement("div");
+    elChBChBChB.setAttribute("class", "question_type_3_answers");
+    elChBChBChB.setAttribute("id", "question_type_3_answers");
+    let elChBChBChBChB = document.createElement("div");
+    elChBChBChBChB.setAttribute("class", "place_of_custom_dropdown");
+
+    let text = question.textDd.split('|');
+    elChBChBChBChB.appendChild(document.createTextNode(text[0])); 
+    for (let i = 0; i < question.answers.length; i++) {
+        elChBChBChBChB.appendChild(createDropdown_Type3(question, i));
+        textel = document.createTextNode(text[i+1]);
+        elChBChBChBChB.appendChild(textel);
+    }
+
+    elChBChBChB.appendChild(elChBChBChBChB);
+    elChBChB.appendChild(elChBChBChB);
+    elChB.appendChild(elChBChB);
+    el.appendChild(elChB);
+
+    if (!questionIsPassed(question)) elChB.appendChild(createBottomPopUp(question));
+
+    return el;
+}
+function createDropdown_Type3(question, i){
+    let el = document.createElement("div");
+    el.setAttribute("class", "custom-dropdown");
+    let elChB = document.createElement("div");
+    elChB.setAttribute("class", "custom-dropdown-input");
+    elChB.setAttribute("id", `custom-dropdown-input-${i}`);
+    let elChBChB = document.createElement("div");
+    elChBChB.setAttribute("class", "custom-dropdown-input-placeholder");
+    let elChBChBChA = document.createTextNode("Выберите ответ");
+    elChBChB.appendChild(elChBChBChA);
+    elChB.appendChild(elChBChB);
+    let elChBChD = document.createElement("div");
+    elChBChD.setAttribute("class", "custom-dropdown-input-icon");
+    let elChBChDChB = document.createElement("img");
+    elChBChDChB.setAttribute("src", "content/check-mark.png");
+    elChBChDChB.setAttribute("alt", "");
+    elChBChD.appendChild(elChBChDChB);
+    elChB.appendChild(elChBChD);
+    el.appendChild(elChB);
+
+    let elChD = document.createElement("div");
+    elChD.setAttribute("class", "custom-dropdown-select closed");
+    elChD.setAttribute("id", `custom-dropdown-select-${i}`);
+
+    
+    for (let j = 0; j < question.answers[i].length; j++) {
+        elChD.appendChild(createDropdownSelect_Type3(question.answers[i], j));
+    }
+
+    elChB.addEventListener('click', function(e){
+        e.target.parentNode.parentNode.getElementsByClassName("custom-dropdown-select")[0].classList.toggle("closed");
+    });
+
+    elChD.addEventListener('click', function(e){
+        text = e.target.innerHTML;
+        e.target.parentNode.classList.toggle("closed");
+        e.target.parentNode.parentNode.getElementsByClassName("custom-dropdown-input-placeholder")[0].innerHTML = text;
+    });
+
+    el.appendChild(elChD);
+
+    return el;
+}
+function createDropdownSelect_Type3(answers, j){
+    let elChDChB = document.createElement("div");
+    let elChDChBChA = document.createTextNode(`${answers[j]}`);
+    elChDChB.appendChild(elChDChBChA);
+    return elChDChB;
 }
