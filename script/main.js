@@ -187,6 +187,7 @@ for (i = 0; i < mainQuestions.length; i++){
     closeButton.classList.add('close_popup_button');
     closeButton.id = 'close_popup_button' + '_' + i;
     closeButton.innerHTML = '<img src="./content/close.svg" alt="close_popup">';
+    closeButton.style.display="none";
 
     closePopupButton.appendChild(closeButton);
 
@@ -341,15 +342,33 @@ for (i = 0; i < mainQuestions.length; i++){
 
     checkAnswerBtn.addEventListener('click',function(event)
     {
-        let minusAttempt = pointsOfAttempt--
-        let rightcheck =true
+        let rightcheck = false
+        //Получения номера вопроса и блока вопросов
+        let questionsblock = event.target.parentNode.parentNode.firstElementChild
+        let question_number = questionsblock.id.split('_')
+        question_number=question_number[question_number.length-1]
+        //Проверка чекбоксов на пустой ответ
+        for (let elem of questionsblock.querySelectorAll(".answer_div")) 
+		{
+            if(elem.firstElementChild.checked)
+            {
+                rightcheck=true
+                break
+            }
+        }
+        if (!rightcheck){
+            return 0;
+        }
+        pointsOfAttempt-=1
+
         
-        if (minusAttempt < 0)
+        
+        if (pointsOfAttempt < 0)
         { 
             return 0;//добавлено, чтобы после измены html кода disabled , проверка ответа не происходила. (простыми словами завершение функции)
         }
-        pointsOfAttemptPlace.innerHTML = minusAttempt;
-        if (minusAttempt < 1)
+        pointsOfAttemptPlace.innerHTML = pointsOfAttempt;
+        if (pointsOfAttempt < 1)
         {
             //Отключение кнопок ответа
             for(let elem of document.querySelectorAll('.check_button')){
@@ -366,15 +385,6 @@ for (i = 0; i < mainQuestions.length; i++){
             }
             
         }
-
-        //Блок проверки
-
-
-        //Получения номера вопроса и блока вопросов
-        let questionsblock = event.target.parentNode.parentNode.firstElementChild
-        let question_number = questionsblock.id.split('_')
-        question_number=question_number[question_number.length-1]
-        
 
         //Обработка
         let counter=0 // Для получения порядкового номера
@@ -399,6 +409,9 @@ for (i = 0; i < mainQuestions.length; i++){
             }
             counter++
         }
+        document.getElementById('close_popup_button_'+question_number).style.display="";
+
+
         if (rightcheck){
             //В случае правильного ответа
             //Не знаю зачем нужен именно массив правильных очков, но допустим
