@@ -8,8 +8,8 @@ let popUpWindow = document.getElementById("popup_window");
 let popUpClose = document.getElementById("popup_close");
 let popUpBottom;
 
-let currentIdQuestion = -1;   
-let currentQuestionType = "0";
+let currentQuestionId = -1;   
+let currentQuestionType = 0;
 let currentQuestionButton;
 
 let questionType1 = document.getElementById("question_type_1");
@@ -119,17 +119,18 @@ document.addEventListener('DOMContentLoaded', function(){
     
 });
 
-// Обработчик события, если нажали на кнопку "Ответить". Собираем ответы
+// Обработчик события, если нажали на кнопку "Ответить". Собираем ответы, проверяем их, записываем
 function submitHandler(e){
     e.preventDefault();
 
-    
+    let answers = getUserAnswers(e);
 
-    if (userHasAnswers(e)){
-        let answers = getUserAnswers(e);
+    if (userHasAnswers(answers)){
         console.log("USER ANSWERS: " + `${answers}`);
         userAnswersHandler(answers);
         popUpQuestionClose();
+    }else{
+        showErrors(e);
     }
     
 }
@@ -142,7 +143,7 @@ function getUserAnswers(el){
         // answers type 3
     }else if (currentQuestionType == 2){
         let textAnsw = []
-        let trueAnsw = allQuestions[currentIdQuestion].answers;
+        let trueAnsw = allQuestions[currentQuestionId].answers;
 
         for (el of el.target.getElementsByClassName("custom-dropdown-input-placeholder")) 
             textAnsw.push(el.innerHTML);
@@ -163,23 +164,36 @@ function getUserAnswers(el){
     return arr;
 }
 
-function userHasAnswers(e){
+// Проверка, ответил ли пользователь НА САМОМ ДЕЛЕ
+function userHasAnswers(answers){
+    //return allQuestions[currentQuestionId].correctAnswer.length === answers.length;
 
-    console.log(e.target);
-    let correct = false;
+    if (currentQuestionType == 0 || currentQuestionType == 1 ) {
+        return answers.length > 0;
+    }else if (currentQuestionType == 2){
+        return allQuestions[currentQuestionId].correctAnswer.length === answers.length;
+    }
+}
 
-    switch (currentQuestionType){
-        case 1:
-            break;
-        case 2:
-            break;
-        case 3:
-            break;
-        case 4:
-            break;
+function showErrors(e){
+
+    let elToErrors = [];
+
+    if (currentQuestionType == 0 || currentQuestionType == 1 || currentQuestionType == 2) {
+        for (let i = 0; i < allQuestions[currentQuestionId].answers.length; i++)
+                elToErrors.push(document.getElementById(`question_type_${currentQuestionType}_answer_${i}`));
     }
 
-    return false;
+    // console.log(allQuestions[currentQuestionId].answers.length);
+    // console.log();
+    // console.log(elToErrors);
+
+    for (el of elToErrors){
+        el.setAttribute("class",`${el.className} un_answered`);
+    }
+
+    document.getElementById("question_text").innerHTML = 
+        allQuestions[currentQuestionId].text +" Выберите ответ!";
 }
 
 // Функция установки состояния вопроса: Пройден(1), Не пройден(0).
@@ -201,8 +215,8 @@ function popUpQuestionOpen(question){
     // Подготовка к созданию окна. Удаляем тело прошлого модального окна, если есть
     deletePopUpMain()
 
-    currentIdQuestion = question.className.split(" ")[1].replace("id", "");
-    currentQuestionType = allQuestions[currentIdQuestion].type;
+    currentQuestionId = question.className.split(" ")[1].replace("id", "");
+    currentQuestionType = allQuestions[currentQuestionId].type;
 
     constuctPopUp();
 
@@ -216,9 +230,9 @@ function popUpQuestionClose(){
 
 // Функция конструирования блока с вопросом
 function constuctPopUp(){
-    let question = allQuestions[currentIdQuestion];
+    let question = allQuestions[currentQuestionId];
 
-    console.log(`CONSTRUCT QUESTION TYPE ${question.type} AND ID ${currentIdQuestion}`);
+    console.log(`CONSTRUCT QUESTION TYPE ${question.type} AND ID ${currentQuestionId}`);
 
     // Создаем тело модального окна
     popUpWindow.appendChild(createPopUpMain(question));
@@ -236,7 +250,7 @@ function questionIsPassed(question){
 
 // Функция, обрабатывающая ответ пользователя
 function userAnswersHandler(userAnswers){
-    let currentQuestion = allQuestions[currentIdQuestion];
+    let currentQuestion = allQuestions[currentQuestionId];
 
     // Записываем ответ пользователя в соответствующее поле объекта вопроса
     currentQuestion.answered = userAnswers;

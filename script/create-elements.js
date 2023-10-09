@@ -94,12 +94,12 @@ function deletePopUpMain(){
 function createBodyPopUp_Type1(question){
 
     let el = document.createElement("div");
-    el.setAttribute("class", "question_type_1_body");
+    el.setAttribute("class", "question_type_0_body");
     el.setAttribute("id", "question_type_1");
     let elChB = document.createElement("form");
     elChB.setAttribute("style", "width: 100%;");
     let elChBChB = document.createElement("div");
-    elChBChB.setAttribute("class", "question_type_1_radio");
+    elChBChB.setAttribute("class", "question_type_0_radio");
     elChB.appendChild(elChBChB);
     el.appendChild(elChB);
 
@@ -114,14 +114,14 @@ function createBodyPopUp_Type1(question){
 function createAnswer_Type1(question, i){
     
     let el = document.createElement("div");
-    el.setAttribute("id", `question_type_1_answer_${i}`)
+    el.setAttribute("id", `question_type_0_answer_${i}`)
     let elChB = document.createElement("input");
     elChB.setAttribute("type", "radio");
     elChB.setAttribute("name", "answ");
     elChB.setAttribute("value", `${i}`);
     el.appendChild(elChB);
     let elChD = document.createElement("p");
-    elChD.setAttribute("id", `question_type_1_answer_text_${i}`);
+    elChD.setAttribute("id", `question_type_0_answer_text_${i}`);
     let elChDChA = document.createTextNode(question.answers[i]);
     elChD.appendChild(elChDChA);
     el.appendChild(elChD);
@@ -141,8 +141,8 @@ function createAnswer_Type1(question, i){
 }
 function createAnswers_Type1(question){
     let el = document.createElement("div");
-    el.setAttribute("class", "question_type_1_answers");
-    el.setAttribute("id", "question_type_1_answers");
+    el.setAttribute("class", "question_type_0_answers");
+    el.setAttribute("id", "question_type_0_answers");
 
     for (let i = 0; i < question.answers.length; i++) {
         el.appendChild(createAnswer_Type1(question, i));
@@ -152,8 +152,8 @@ function createAnswers_Type1(question){
 }
 function createImgDiv_Type1(question){
     let el = document.createElement("div");
-    el.setAttribute("class", "question_type_1_img");
-    el.setAttribute("id", "question_type_1_img");
+    el.setAttribute("class", "question_type_0_img");
+    el.setAttribute("id", "question_type_0_img");
     
     let img = document.createElement("img");
     img.setAttribute("src", question.image);
@@ -164,12 +164,12 @@ function createImgDiv_Type1(question){
 
 function createBodyPopUp_Type2(question){
     let el = document.createElement("div");
-    el.setAttribute("class", "question_type_2_body");
+    el.setAttribute("class", "question_type_1_body");
     el.setAttribute("id", "question_type_2");
     let elChB = document.createElement("form");
     elChB.setAttribute("style", "width: 100%;");
     let elChBChB = document.createElement("div");
-    elChBChB.setAttribute("class", "question_type_2_radio");
+    elChBChB.setAttribute("class", "question_type_1_radio");
     elChB.appendChild(elChBChB);
     el.appendChild(elChB);
 
@@ -181,13 +181,13 @@ function createBodyPopUp_Type2(question){
 }
 function createAnswer_Type2(question, i){
     let el = document.createElement("div");
-    el.setAttribute("id", `question_type_2_answer_${i}`);
+    el.setAttribute("id", `question_type_1_answer_${i}`);
     let elChB = document.createElement("input");
     elChB.setAttribute("type", "checkbox");
     elChB.setAttribute("value", `${i}`);
     el.appendChild(elChB);
     let elChD = document.createElement("p");
-    elChD.setAttribute("id", `question_type_2_answer_text_${i}`);
+    elChD.setAttribute("id", `question_type_1_answer_text_${i}`);
     let elChDChA = document.createTextNode(`${question.answers[i]}`);
     elChD.appendChild(elChDChA);
     el.appendChild(elChD);
@@ -208,8 +208,8 @@ function createAnswer_Type2(question, i){
 }
 function createAnswers_Type2(question){
     let el = document.createElement("div");
-    el.setAttribute("class", "question_type_2_answers");
-    el.setAttribute("id", "question_type_2_answers");
+    el.setAttribute("class", "question_type_1_answers");
+    el.setAttribute("id", "question_type_1_answers");
 
     for (let i = 0; i < question.answers.length; i++) {
         el.appendChild(createAnswer_Type2(question, i));
@@ -220,15 +220,15 @@ function createAnswers_Type2(question){
 
 function createBodyPopUp_Type3(question){
     let el = document.createElement("div");
-    el.setAttribute("class", "question_type_3_body");
+    el.setAttribute("class", "question_type_2_body");
     el.setAttribute("id", "question_type_3");
     let elChB = document.createElement("form");
     elChB.setAttribute("style", "width: 100%;");
     let elChBChB = document.createElement("div");
-    elChBChB.setAttribute("class", "question_type_3_dropdown");
+    elChBChB.setAttribute("class", "question_type_2_dropdown");
     let elChBChBChB = document.createElement("div");
-    elChBChBChB.setAttribute("class", "question_type_3_answers");
-    elChBChBChB.setAttribute("id", "question_type_3_answers");
+    elChBChBChB.setAttribute("class", "question_type_2_answers");
+    elChBChBChB.setAttribute("id", "question_type_2_answers");
     let elChBChBChBChB = document.createElement("div");
     elChBChBChBChB.setAttribute("class", "place_of_custom_dropdown");
 
@@ -254,7 +254,7 @@ function createDropdown_Type3(question, i){
     el.setAttribute("class", "custom-dropdown");
     let elChB = document.createElement("div");
     elChB.setAttribute("class", "custom-dropdown-input");
-    elChB.setAttribute("id", `custom-dropdown-input-${i}`);
+    elChB.setAttribute("id", `question_type_2_answer_${i}`);
     let elChBChB = document.createElement("div");
     elChBChB.setAttribute("class", "custom-dropdown-input-placeholder");
     let elChBChBChA = document.createTextNode("Выберите ответ");
