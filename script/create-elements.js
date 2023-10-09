@@ -114,23 +114,27 @@ function createBodyPopUp_Type1(question){
 function createAnswer_Type1(question, i){
     
     let el = document.createElement("div");
+    el.setAttribute("id", `question_type_1_answer_${i}`)
     let elChB = document.createElement("input");
     elChB.setAttribute("type", "radio");
     elChB.setAttribute("name", "answ");
     elChB.setAttribute("value", `${i}`);
     el.appendChild(elChB);
     let elChD = document.createElement("p");
-    elChD.setAttribute("id", `question_type_1_answer_${i}`);
+    elChD.setAttribute("id", `question_type_1_answer_text_${i}`);
     let elChDChA = document.createTextNode(question.answers[i]);
     elChD.appendChild(elChDChA);
     el.appendChild(elChD);
 
     if (questionIsPassed(question)){
-
         elChB.setAttribute("class", "disabled_input");
         if(question.answered.includes(i, 0)) {
             elChB.checked = true;
         }
+    }else{
+        el.addEventListener('click', () => {
+            elChB.checked = !elChB.checked;
+        });
     }
     
     return el;
@@ -177,12 +181,13 @@ function createBodyPopUp_Type2(question){
 }
 function createAnswer_Type2(question, i){
     let el = document.createElement("div");
+    el.setAttribute("id", `question_type_2_answer_${i}`);
     let elChB = document.createElement("input");
     elChB.setAttribute("type", "checkbox");
     elChB.setAttribute("value", `${i}`);
     el.appendChild(elChB);
     let elChD = document.createElement("p");
-    elChD.setAttribute("id", `question_type_2_answer_${i}`);
+    elChD.setAttribute("id", `question_type_2_answer_text_${i}`);
     let elChDChA = document.createTextNode(`${question.answers[i]}`);
     elChD.appendChild(elChDChA);
     el.appendChild(elChD);
@@ -192,6 +197,11 @@ function createAnswer_Type2(question, i){
         if(question.answered.includes(i, 0)) {
             elChB.checked = true;
         }
+    }else{
+        el.addEventListener('click', () => {
+            console.log("click!");
+            elChB.checked = !elChB.checked;
+        });
     }
 
     return el;
@@ -268,14 +278,13 @@ function createDropdown_Type3(question, i){
         elChD.appendChild(createDropdownSelect_Type3(question.answers[i], j));
     }
 
-    elChB.addEventListener('click', function(e){
-        e.target.parentNode.parentNode.getElementsByClassName("custom-dropdown-select")[0].classList.toggle("closed");
+    el.addEventListener('click', function(e){
+        elChD.classList.toggle("closed");
     });
 
     elChD.addEventListener('click', function(e){
         text = e.target.innerHTML;
-        e.target.parentNode.classList.toggle("closed");
-        e.target.parentNode.parentNode.getElementsByClassName("custom-dropdown-input-placeholder")[0].innerHTML = text;
+        elChBChB.innerHTML = text;
     });
 
     el.appendChild(elChD);

@@ -180,12 +180,16 @@ header h1 {
 
 .state_marker {
     position: absolute;
+    
     top: -5px;
-    left: 5px;
+    right: 5px;
 }
 
 .state_marker img {
     width: 50px;
+    
+    background-color: white;
+    border-radius: 100%;
 }
 
 @media (width <= 1280px) {
@@ -250,8 +254,8 @@ header h1 {
     }
 
     .state_marker {
+        
         top: 3px;
-        left: 2px;
     }
     
     .state_marker img {

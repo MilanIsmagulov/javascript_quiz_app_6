@@ -116,10 +116,6 @@ document.addEventListener('DOMContentLoaded', function(){
     // DEBUGGING
 
     // Открытие меню выбора ответа
-    document.getElementById("custom-dropdown-input-0").addEventListener('click', function(e){
-        
-        e.target.parentNode.parentNode.getElementsByClassName("custom-dropdown-select")[0].classList.toggle("closed");
-    });
     
 });
 
@@ -127,13 +123,18 @@ document.addEventListener('DOMContentLoaded', function(){
 function submitHandler(e){
     e.preventDefault();
 
-    let answers = getUserAnswers(e);
-        
-    console.log(`user answers: ${answers}`);
-    userAnswersHandler(answers);
-    popUpQuestionClose();
+    
+
+    if (userHasAnswers(e)){
+        let answers = getUserAnswers(e);
+        console.log("USER ANSWERS: " + `${answers}`);
+        userAnswersHandler(answers);
+        popUpQuestionClose();
+    }
+    
 }
 
+// Получаем ответы пользователя, в нужном нам формате
 function getUserAnswers(el){
     let arr = [];
 
@@ -160,6 +161,25 @@ function getUserAnswers(el){
     }
 
     return arr;
+}
+
+function userHasAnswers(e){
+
+    console.log(e.target);
+    let correct = false;
+
+    switch (currentQuestionType){
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+    }
+
+    return false;
 }
 
 // Функция установки состояния вопроса: Пройден(1), Не пройден(0).
