@@ -52,7 +52,7 @@ let allQuestions = [
         price: 150,
         text: 'Выберите имена ученых:',
         image: null,
-        answers: ['Игорь Юрьев', 'Вячеслав Казанцев', 'Иван', 'Денис Саликов', 'Люся Генриховна', 'Алишер Батут'],
+        answers: ['Игорь Юрьев', 'Вячеслав Казанцев', 'Иван', 'Денис Саликов', 'Люся Генриховна'],
         correctAnswer: [2,3], // id правильного ответа из поля answers
         answered: null, // какой вариант ответа выбрал пользователь
     },
@@ -140,7 +140,7 @@ function getUserAnswers(el){
     let arr = [];
 
     if (currentQuestionType == 3) {
-        // answers type 3
+
     }else if (currentQuestionType == 2){
         let textAnsw = []
         let trueAnsw = allQuestions[currentQuestionId].answers;
@@ -153,9 +153,6 @@ function getUserAnswers(el){
                 if (textAnsw[i] == trueAnsw[i][j]) arr.push(j);
             }
         }
-                
-
-        console.log(arr);
         
     }else {
         for (el of el.target) if(el.checked) arr.push(parseInt(el.value));
@@ -179,14 +176,16 @@ function showErrors(e){
 
     let elToErrors = [];
 
-    if (currentQuestionType == 0 || currentQuestionType == 1 || currentQuestionType == 2) {
+    if (currentQuestionType == 0 || currentQuestionType == 1 ) {
         for (let i = 0; i < allQuestions[currentQuestionId].answers.length; i++)
                 elToErrors.push(document.getElementById(`question_type_${currentQuestionType}_answer_${i}`));
+    }else if (currentQuestionType == 2){
+        for (let i = 0; i < allQuestions[currentQuestionId].answers.length; i++){
+            txtAnswer = document.getElementById(`question_type_${currentQuestionType}_answer_${i}`).childNodes[0].innerHTML
+            if (txtAnswer == "Выберите ответ")
+                elToErrors.push(document.getElementById(`question_type_${currentQuestionType}_answer_${i}`));
+        }
     }
-
-    // console.log(allQuestions[currentQuestionId].answers.length);
-    // console.log();
-    // console.log(elToErrors);
 
     for (el of elToErrors){
         el.setAttribute("class",`${el.className} un_answered`);
@@ -273,15 +272,13 @@ function userAnswersHandler(userAnswers){
 
 // Функция, возвращающее, верный ли был ответ
 function answerIsCorrect(question, userAnswers){
-    corrects = question.correctAnswer.sort();
-    userAnswers = userAnswers.sort();
+    corrects = question.correctAnswer;
+    userAnswers = userAnswers;
 
     if (corrects.toString() === userAnswers.toString()) return true;
 
     return false;
 }
-
-// Функция для 2 типа вопросов.
 
 
 

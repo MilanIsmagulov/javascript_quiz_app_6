@@ -343,7 +343,7 @@ input[type='checkbox']:checked {
     font-weight: normal;
     padding: .5vh;
     vertical-align: middle;
-    margin-right: 1vh;
+    
 }
 
 .custom-dropdown-input-icon{
@@ -355,6 +355,7 @@ input[type='checkbox']:checked {
     align-items: center !important;
     justify-content: center !important;
     margin-right: 1vh;
+    margin-left: 1vh;
 }
 
 .custom-dropdown-input-icon img{

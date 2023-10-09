@@ -12,15 +12,15 @@ function createPopUpMain(question){
     switch(question.type) {
         case 0:
             
-            elChB.appendChild(createBodyPopUp_Type1(question));
+            elChB.appendChild(createBodyPopUp_Type0(question));
             break;
 
         case 1:;
-            elChB.appendChild(createBodyPopUp_Type2(question));
+            elChB.appendChild(createBodyPopUp_Type1(question));
             break;
 
         case 2:
-            elChB.appendChild(createBodyPopUp_Type3(question));
+            elChB.appendChild(createBodyPopUp_Type2(question));
             break;
 
         case 3:
@@ -91,11 +91,11 @@ function deletePopUpMain(){
 
 
 
-function createBodyPopUp_Type1(question){
+function createBodyPopUp_Type0(question){
 
     let el = document.createElement("div");
     el.setAttribute("class", "question_type_0_body");
-    el.setAttribute("id", "question_type_1");
+    el.setAttribute("id", "question_type_0");
     let elChB = document.createElement("form");
     elChB.setAttribute("style", "width: 100%;");
     let elChBChB = document.createElement("div");
@@ -103,15 +103,15 @@ function createBodyPopUp_Type1(question){
     elChB.appendChild(elChBChB);
     el.appendChild(elChB);
 
-    if (question.image != null) elChBChB.appendChild(createImgDiv_Type1(question));
+    if (question.image != null) elChBChB.appendChild(createImgDiv_Type0(question));
 
-    elChBChB.appendChild(createAnswers_Type1(question));
+    elChBChB.appendChild(createAnswers_Type0(question));
 
     if (!questionIsPassed(question)) elChB.appendChild(createBottomPopUp(question));
 
     return el;
 }
-function createAnswer_Type1(question, i){
+function createAnswer_Type0(question, i){
     
     let el = document.createElement("div");
     el.setAttribute("id", `question_type_0_answer_${i}`)
@@ -139,18 +139,18 @@ function createAnswer_Type1(question, i){
     
     return el;
 }
-function createAnswers_Type1(question){
+function createAnswers_Type0(question){
     let el = document.createElement("div");
     el.setAttribute("class", "question_type_0_answers");
     el.setAttribute("id", "question_type_0_answers");
 
     for (let i = 0; i < question.answers.length; i++) {
-        el.appendChild(createAnswer_Type1(question, i));
+        el.appendChild(createAnswer_Type0(question, i));
     }
 
     return el;
 }
-function createImgDiv_Type1(question){
+function createImgDiv_Type0(question){
     let el = document.createElement("div");
     el.setAttribute("class", "question_type_0_img");
     el.setAttribute("id", "question_type_0_img");
@@ -162,10 +162,10 @@ function createImgDiv_Type1(question){
     return el;
 }
 
-function createBodyPopUp_Type2(question){
+function createBodyPopUp_Type1(question){
     let el = document.createElement("div");
     el.setAttribute("class", "question_type_1_body");
-    el.setAttribute("id", "question_type_2");
+    el.setAttribute("id", "question_type_1");
     let elChB = document.createElement("form");
     elChB.setAttribute("style", "width: 100%;");
     let elChBChB = document.createElement("div");
@@ -173,13 +173,13 @@ function createBodyPopUp_Type2(question){
     elChB.appendChild(elChBChB);
     el.appendChild(elChB);
 
-    elChBChB.appendChild(createAnswers_Type2(question));
+    elChBChB.appendChild(createAnswers_Type1(question));
 
     if (!questionIsPassed(question)) elChB.appendChild(createBottomPopUp(question));
 
     return el;
 }
-function createAnswer_Type2(question, i){
+function createAnswer_Type1(question, i){
     let el = document.createElement("div");
     el.setAttribute("id", `question_type_1_answer_${i}`);
     let elChB = document.createElement("input");
@@ -206,22 +206,22 @@ function createAnswer_Type2(question, i){
 
     return el;
 }
-function createAnswers_Type2(question){
+function createAnswers_Type1(question){
     let el = document.createElement("div");
     el.setAttribute("class", "question_type_1_answers");
     el.setAttribute("id", "question_type_1_answers");
 
     for (let i = 0; i < question.answers.length; i++) {
-        el.appendChild(createAnswer_Type2(question, i));
+        el.appendChild(createAnswer_Type1(question, i));
     }
 
     return el;
 }
 
-function createBodyPopUp_Type3(question){
+function createBodyPopUp_Type2(question){
     let el = document.createElement("div");
     el.setAttribute("class", "question_type_2_body");
-    el.setAttribute("id", "question_type_3");
+    el.setAttribute("id", "question_type_2");
     let elChB = document.createElement("form");
     elChB.setAttribute("style", "width: 100%;");
     let elChBChB = document.createElement("div");
@@ -235,7 +235,7 @@ function createBodyPopUp_Type3(question){
     let text = question.textDd.split('|');
     elChBChBChBChB.appendChild(document.createTextNode(text[0])); 
     for (let i = 0; i < question.answers.length; i++) {
-        elChBChBChBChB.appendChild(createDropdown_Type3(question, i));
+        elChBChBChBChB.appendChild(createDropdown_Type2(question, i));
         textel = document.createTextNode(text[i+1]);
         elChBChBChBChB.appendChild(textel);
     }
@@ -249,7 +249,8 @@ function createBodyPopUp_Type3(question){
 
     return el;
 }
-function createDropdown_Type3(question, i){
+function createDropdown_Type2(question, i){
+    let passed = questionIsPassed(question);
     let el = document.createElement("div");
     el.setAttribute("class", "custom-dropdown");
     let elChB = document.createElement("div");
@@ -257,41 +258,56 @@ function createDropdown_Type3(question, i){
     elChB.setAttribute("id", `question_type_2_answer_${i}`);
     let elChBChB = document.createElement("div");
     elChBChB.setAttribute("class", "custom-dropdown-input-placeholder");
-    let elChBChBChA = document.createTextNode("Выберите ответ");
+
+    let elChBChBChA = ":)";
+    if (!passed){
+        elChBChBChA = document.createTextNode("Выберите ответ");
+    }else{
+        console.log(question.answers);
+        console.log(question.answered);
+        elChBChBChA = document.createTextNode(`${question.answers[i][question.answered[i]]}`);
+    }
+
     elChBChB.appendChild(elChBChBChA);
     elChB.appendChild(elChBChB);
-    let elChBChD = document.createElement("div");
-    elChBChD.setAttribute("class", "custom-dropdown-input-icon");
-    let elChBChDChB = document.createElement("img");
-    elChBChDChB.setAttribute("src", "content/check-mark.png");
-    elChBChDChB.setAttribute("alt", "");
-    elChBChD.appendChild(elChBChDChB);
-    elChB.appendChild(elChBChD);
+    if (!passed){
+        let elChBChD = document.createElement("div");
+        elChBChD.setAttribute("class", "custom-dropdown-input-icon");
+        let elChBChDChB = document.createElement("img");
+        elChBChDChB.setAttribute("src", "content/check-mark.png");
+        elChBChDChB.setAttribute("alt", "");
+        elChBChD.appendChild(elChBChDChB);
+        elChB.appendChild(elChBChD);
+    }
+
     el.appendChild(elChB);
 
     let elChD = document.createElement("div");
     elChD.setAttribute("class", "custom-dropdown-select closed");
     elChD.setAttribute("id", `custom-dropdown-select-${i}`);
 
-    
-    for (let j = 0; j < question.answers[i].length; j++) {
-        elChD.appendChild(createDropdownSelect_Type3(question.answers[i], j));
+    if (!passed){
+
+        for (let j = 0; j < question.answers[i].length; j++) {
+            elChD.appendChild(createDropdownSelect_Type2(question.answers[i], j));
+        }
+
+        el.addEventListener('click', function(e){
+            elChD.classList.toggle("closed");
+        });
+
+        elChD.addEventListener('click', function(e){
+            text = e.target.innerHTML;
+            elChBChB.innerHTML = text;
+        });
+
     }
-
-    el.addEventListener('click', function(e){
-        elChD.classList.toggle("closed");
-    });
-
-    elChD.addEventListener('click', function(e){
-        text = e.target.innerHTML;
-        elChBChB.innerHTML = text;
-    });
 
     el.appendChild(elChD);
 
     return el;
 }
-function createDropdownSelect_Type3(answers, j){
+function createDropdownSelect_Type2(answers, j){
     let elChDChB = document.createElement("div");
     let elChDChBChA = document.createTextNode(`${answers[j]}`);
     elChDChB.appendChild(elChDChBChA);
