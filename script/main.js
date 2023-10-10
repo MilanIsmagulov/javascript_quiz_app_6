@@ -177,9 +177,18 @@ function getUserAnswers(el){
     if (currentQuestionType == 3) {
         let dragZones = el.target.getElementsByClassName("question_type_3_answer_drop_zone");
 
-        for (el of dragZones) textAnsw.push(el.children[0].innerHTML);
+        for (el of dragZones){
+            console.log(el.children[0]);
+            if (el.children[0] != null) {
+                textAnsw.push(el.children[0].innerHTML);
+            }
+        }
         
         for (let i = 0; i < trueAnsw.length; i++) arr.push(trueAnsw.indexOf(textAnsw[i]));
+        for (let i = 0; i < arr.length; i++) if (arr[i] == -1) arr.pop();
+        
+
+        console.log(arr);
         
 
     }else if (currentQuestionType == 2){
@@ -224,6 +233,10 @@ function showErrors(e){
             if (txtAnswer == "Выберите ответ")
                 elToErrors.push(document.getElementById(`question_type_${currentQuestionType}_answer_${i}`));
         }
+    } else if(currentQuestionType == 3){
+        let dragZones = e.target.getElementsByClassName("question_type_3_answer_drop_zone");
+
+        for (el of dragZones) elToErrors.push(el);
     }
 
     for (el of elToErrors){
@@ -366,11 +379,16 @@ function dropObject(e){
         console.log("ITS WHITE SPACE");
         dropTarget = e.target.getElementsByClassName("question_type_3_answer_drop_zone")[0];
 
-    }else if(e.target.tagName == "DIV" && e.target.className == "question_type_3_answer_drop_zone"){
+    }else if(e.target.tagName == "DIV" && 
+            (e.target.className == "question_type_3_answer_drop_zone" || 
+            e.target.className == "question_type_3_answer_drop_zone un_answered"))
+        {
         console.log("ITS DROP SPACE");
         dropTarget = e.target;
 
     }
+
+    console.log(dropTarget);
     
     if (dropTarget.children.length > 0) dropTarget.innerHTML = " ";
     
