@@ -325,7 +325,7 @@ function createBodyPopUp_Type3(question){
     elChBChB.setAttribute("class", "question_type_3_drag_n_drop_images");
 
     elChBChB.appendChild(createAnswers_Type3(question));
-    elChBChB.appendChild(createDrags_Type3(question));
+    if (!questionIsPassed(question)) elChBChB.appendChild(createDrags_Type3(question));
 
     elChB.appendChild(elChBChB);
     el.appendChild(elChB);
@@ -359,6 +359,13 @@ function createAnswer_Type3(question, i){
     let elChD = document.createElement("div");
     elChD.setAttribute("class", "question_type_3_answer_drop_zone");
     elChD.setAttribute("id", `question_type_3_answer_drop_zone_${i}`);
+
+    if(questionIsPassed(question)){
+        elChD.setAttribute("class", "question_type_3_answer_drop_zone question_type_3_dropped");
+        let text = document.createTextNode(`${question.answers[question.answered[i]]}`);
+        elChD.appendChild(text);
+    }
+
     el.appendChild(elChD);
 
     return el;
