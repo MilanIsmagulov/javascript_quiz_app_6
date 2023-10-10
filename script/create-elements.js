@@ -24,7 +24,7 @@ function createPopUpMain(question){
             break;
 
         case 3:
-            constuctQuestionType4(question);
+            elChB.appendChild(createBodyPopUp_Type3(question));
             break;
 
         case 4:
@@ -58,10 +58,9 @@ function createHeaderPopUp(question){
     let elChDChB = document.createElement("img");
     elChDChB.setAttribute("src", "./content/close.svg");
     elChDChB.setAttribute("alt", "header_popup");
-    if (questionIsPassed(question)) elChD.appendChild(elChDChB);
-    el.appendChild(elChD);
+    elChD.appendChild(elChDChB);
+    if (questionIsPassed(question)) el.appendChild(elChD);
         
-
     return el;
 }
 
@@ -312,4 +311,76 @@ function createDropdownSelect_Type2(answers, j){
     let elChDChBChA = document.createTextNode(`${answers[j]}`);
     elChDChB.appendChild(elChDChBChA);
     return elChDChB;
+}
+
+function createBodyPopUp_Type3(question){
+    let el = document.createElement("div");
+    el.setAttribute("class", "question_type_3_body");
+    el.setAttribute("id", "question_type_3");
+
+    let elChB = document.createElement("form");
+    elChB.setAttribute("style", "width: 100%;");
+
+    let elChBChB = document.createElement("div");
+    elChBChB.setAttribute("class", "question_type_3_drag_n_drop_images");
+
+    elChBChB.appendChild(createAnswers_Type3(question));
+    elChBChB.appendChild(createDrags_Type3(question));
+
+    elChB.appendChild(elChBChB);
+    el.appendChild(elChB);
+
+    if (!questionIsPassed(question)) elChB.appendChild(createBottomPopUp(question));
+
+    return el;
+}
+function createAnswers_Type3(question){
+    let el = document.createElement("div");
+    el.setAttribute("class", "question_type_3_answers");
+    el.setAttribute("id", "question_type_3_answers");
+
+    for (let i = 0; i < question.answers.length ; i++){
+        el.appendChild(createAnswer_Type3(question, i));
+    }
+
+    return el;
+}
+function createAnswer_Type3(question, i){
+    let el = document.createElement("div");
+    el.setAttribute("class", "question_type_3_answer");
+    el.setAttribute("id", `question_type_3_answer_${i}`);
+    let elChB = document.createElement("div");
+    elChB.setAttribute("class", "question_type_3_answer_img");
+    let elChBChB = document.createElement("img");
+    elChBChB.setAttribute("src", `${question.image}${[i]}.png`);
+    elChBChB.setAttribute("alt", "");
+    elChB.appendChild(elChBChB);
+    el.appendChild(elChB);
+    let elChD = document.createElement("div");
+    elChD.setAttribute("class", "question_type_3_answer_drop_zone");
+    elChD.setAttribute("id", `question_type_3_answer_drop_zone_${i}`);
+    el.appendChild(elChD);
+
+    return el;
+}
+function createDrags_Type3(question){
+    let el = document.createElement("div");
+    el.setAttribute("class", "question_type_3_drags");
+
+    for (let i = 0; i < question.answers.length ; i++){
+        el.appendChild(createDrag_Type3(question, i));
+    }
+
+    return el;
+}
+function createDrag_Type3(question, i){
+    let el = document.createElement("div");
+    el.setAttribute("class", "question_type_3_drag");
+    el.setAttribute("id", `question_type_3_drag_${i}`);
+    let elChA = document.createTextNode(`${question.answers[i]}`);
+    el.appendChild(elChA);
+
+    el.addEventListener('mousedown', (e) => dragNdropHandler(e));
+
+    return el;
 }

@@ -8,6 +8,9 @@ let popUpWindow = document.getElementById("popup_window");
 let popUpClose = document.getElementById("popup_close");
 let popUpBottom;
 
+let dragNdropObject = 0;
+let dropTarget = 0;
+
 let currentQuestionId = -1;   
 let currentQuestionType = 0;
 let currentQuestionButton;
@@ -87,10 +90,42 @@ let allQuestions = [
         correctAnswer: [2,0,1], // id правильного ответа из поля answers
         answered: null, // какой вариант ответа выбрал пользователь
     },
+    {
+        type: 2, 
+        price: 200,
+        text: 'Вставте пропущенные слова:',
+        textDd: "Семен Морозов родился в |. Он разработал свою первую штуку в | году. "+
+                    "Благодаря этой разработке, все | мира могут спать спокойно",
+        image: null,
+        answers: [["Узбекистане", "Ираке", "России"],
+                ["1950","3572","824"],
+                ["коты","жители","суслики"]],
+        correctAnswer: [2,0,1], // id правильного ответа из поля answers
+        answered: null, // какой вариант ответа выбрал пользователь
+    },
+    {
+        type: 2, 
+        price: 200,
+        text: 'Вставте пропущенные слова:',
+        textDd: "Семен Морозов родился в |. Он разработал свою первую штуку в | году. "+
+                    "Благодаря этой разработке, все | мира могут спать спокойно",
+        image: null,
+        answers: [["Узбекистане", "Ираке", "России"],
+                ["1950","3572","824"],
+                ["коты","жители","суслики"]],
+        correctAnswer: [2,0,1], // id правильного ответа из поля answers
+        answered: null, // какой вариант ответа выбрал пользователь
+    },
+    {
+        type: 3, 
+        price: 250,
+        text: 'Установите соответствие между названием насадки и изображением.',
+        image: "content/dragndrop/type_3_0/",
+        answers: ["Кольца Рашига","Кольца с крестообразной перегородкой","Кольца Палля","Кольца Лессинга"],
+        correctAnswer: [1,2,3,0], // id правильного ответа из поля answers
+        answered: null, // какой вариант ответа выбрал пользователь
+    },
 ]; 
-
-// Массив с пройденными вопросами
-let passedQuestions = [];
 
 // Массив путей для состояния вопроса
 let questionsStates = [
@@ -114,8 +149,6 @@ document.addEventListener('DOMContentLoaded', function(){
         });
     }
     // DEBUGGING
-
-    // Открытие меню выбора ответа
     
 });
 
@@ -138,12 +171,18 @@ function submitHandler(e){
 // Получаем ответы пользователя, в нужном нам формате
 function getUserAnswers(el){
     let arr = [];
+    let textAnsw = [];
+    let trueAnsw = allQuestions[currentQuestionId].answers;
 
     if (currentQuestionType == 3) {
+        let dragZones = el.target.getElementsByClassName("question_type_3_answer_drop_zone");
+
+        for (el of dragZones) textAnsw.push(el.children[0].innerHTML);
+        
+        for (let i = 0; i < trueAnsw.length; i++) arr.push(trueAnsw.indexOf(textAnsw[i]));
+        
 
     }else if (currentQuestionType == 2){
-        let textAnsw = []
-        let trueAnsw = allQuestions[currentQuestionId].answers;
 
         for (el of el.target.getElementsByClassName("custom-dropdown-input-placeholder")) 
             textAnsw.push(el.innerHTML);
@@ -167,7 +206,7 @@ function userHasAnswers(answers){
 
     if (currentQuestionType == 0 || currentQuestionType == 1 ) {
         return answers.length > 0;
-    }else if (currentQuestionType == 2){
+    }else if (currentQuestionType == 2 || currentQuestionType == 3){
         return allQuestions[currentQuestionId].correctAnswer.length === answers.length;
     }
 }
@@ -278,6 +317,82 @@ function answerIsCorrect(question, userAnswers){
     if (corrects.toString() === userAnswers.toString()) return true;
 
     return false;
+}
+
+// Функция обработчик события "Взяли объект"
+function dragNdropHandler(e){
+    console.log("DRAG-N-DROP");
+    // Создание точной копии объекта
+    let clone = e.target.cloneNode(true);
+    dragNdropObject = clone;
+    e.target.parentNode.appendChild(clone);
+
+    // даём элементу абсолютную позицию, да бы перемещать без нарушения верстки
+    // и перемещаем его на позицию курсора
+    clone.style.position = 'absolute';
+    dragMoveAt(e, clone);
+
+    // 3, перемещать по экрану
+    document.onmousemove = function(e) {
+        dragMoveAt(e, clone);
+    }
+
+    // 4. отследить окончание переноса
+    clone.onmouseup = function() {
+        document.onmousemove = null;
+        clone.onmouseup = null;
+        clone.remove();
+
+        // Отслеживаем, где отпустили объект
+        document.getElementById('question_type_3_answers').addEventListener('mouseover', (e) => dropObject(e), {once: true});
+        
+    }
+}
+
+// Функция перемещения объекта и позиционирования его по центру
+function dragMoveAt(e, el) {
+    el.style.left = e.pageX - el.offsetWidth / 2 + 'px';
+    el.style.top = e.pageY - el.offsetHeight / 2 + 'px';
+}
+
+// Функция обработчик, отслеживаем где отпустили объект и добавляем его в соотв. drop_zone
+function dropObject(e){
+    if (e.target.tagName == "IMG"){
+        console.log("ITS IMG");
+        let parents = e.target.parentNode.parentNode;
+        dropTarget = parents.getElementsByClassName("question_type_3_answer_drop_zone")[0];
+
+    }else if(e.target.tagName == "DIV" && e.target.className == "question_type_3_answer") {
+        console.log("ITS WHITE SPACE");
+        dropTarget = e.target.getElementsByClassName("question_type_3_answer_drop_zone")[0];
+
+    }else if(e.target.tagName == "DIV" && e.target.className == "question_type_3_answer_drop_zone"){
+        console.log("ITS DROP SPACE");
+        dropTarget = e.target;
+
+    }
+    
+    if (dropTarget.children.length > 0) dropTarget.innerHTML = " ";
+    
+    checkDragDuplicates(document.getElementById(`question_type_${currentQuestionType}_answers`));
+    dragNdropObject.style = null;
+    dropTarget.appendChild(dragNdropObject);
+}
+
+// Функция проверки, и очистки дубликатов ответов в drop_zones
+function checkDragDuplicates(answers){
+
+    dropZones = answers.getElementsByClassName(`question_type_${currentQuestionType}_answer_drop_zone`);
+    
+    for (let i = 0; i < dropZones.length; i++){
+        let child = dropZones[i].children[0];
+        if (child != null){
+            if (child.innerHTML == dragNdropObject.innerHTML) {
+                console.log("Дубликат удален");
+                child.remove();
+            }
+        }
+    }
 }
 
 
