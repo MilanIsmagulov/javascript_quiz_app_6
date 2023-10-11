@@ -129,6 +129,10 @@ function createAnswer_Type0(question, i){
         elChB.setAttribute("class", "disabled_input");
         if(question.answered.includes(i, 0)) {
             elChB.checked = true;
+
+            if (question.correctAnswer.includes(i)){
+                el.style = "background-color: #bdffbd;";
+            }else el.style = "background-color: #ffb9b9;";
         }
     }else{
         el.addEventListener('click', () => {
@@ -195,6 +199,10 @@ function createAnswer_Type1(question, i){
         elChB.setAttribute("class", "disabled_input");
         if(question.answered.includes(i, 0)) {
             elChB.checked = true;
+
+            if (question.correctAnswer.includes(i)){
+                el.style = "background-color: #bdffbd;";
+            }else el.style = "background-color: #ffb9b9;";
         }
     }else{
         el.addEventListener('click', () => {
@@ -262,9 +270,11 @@ function createDropdown_Type2(question, i){
     if (!passed){
         elChBChBChA = document.createTextNode("Выберите ответ");
     }else{
-        console.log(question.answers);
-        console.log(question.answered);
         elChBChBChA = document.createTextNode(`${question.answers[i][question.answered[i]]}`);
+        
+        if (question.correctAnswer[i] == question.answered[i]){
+            elChB.style = "background-color: #bdffbd;";
+        }else elChB.style = "background-color: #ffb9b9;";
     }
 
     elChBChB.appendChild(elChBChBChA);
@@ -364,6 +374,9 @@ function createAnswer_Type3(question, i){
         elChD.setAttribute("class", "question_type_3_answer_drop_zone question_type_3_dropped");
         let text = document.createTextNode(`${question.answers[question.answered[i]]}`);
         elChD.appendChild(text);
+        if (question.correctAnswer[i] == question.answered[i]){
+            elChD.style = "background-color: #bdffbd;";
+        }else elChD.style = "background-color: #ffb9b9;";
     }
 
     el.appendChild(elChD);

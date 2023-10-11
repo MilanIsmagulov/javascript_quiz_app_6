@@ -212,6 +212,8 @@ body{
     height: 4vw;
     margin-top: 1vh;
     margin-bottom: 1vh;
+    /* background-color: lightgreen; */
+    /* background-color: lightcoral; */
 }
 
 .question_type_0_answers input[type=radio]{
@@ -333,6 +335,7 @@ input[type='checkbox']:checked {
     flex-wrap: unset !important;
 
     padding: 5% 0;
+    min-width: 22vh;
 
 }
 
@@ -441,7 +444,9 @@ input[type='checkbox']:checked {
 }
 
 .question_type_3_dropped{
-    background-color: #025EA1 !important;
+    padding: 1vh;
+    font-weight: 600;
+    color:#000;
     user-select: none;
 }
 

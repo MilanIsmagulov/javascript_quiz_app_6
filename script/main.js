@@ -146,7 +146,8 @@ document.addEventListener('DOMContentLoaded', function(){
     for (question of questionsBtn){
         question.addEventListener('click', function(e){
             currentQuestionButton = e.srcElement;
-            popUpQuestionOpen(this);
+            currentQuestionId = this.className.split(" ")[1].replace("id", "");
+            popUpQuestionOpen();
         });
     }
     // DEBUGGING
@@ -162,7 +163,8 @@ function submitHandler(e){
     if (userHasAnswers(answers)){
         console.log("USER ANSWERS: " + `${answers}`);
         userAnswersHandler(answers);
-        popUpQuestionClose();
+        popUpQuestionOpen(allQuestions[currentQuestionId]);
+        // popUpQuestionClose();
     }else{
         showErrors(e);
     }
@@ -262,12 +264,11 @@ function setStateToQuestion(el, state) {
 }
 
 // Функция открытия модального окна
-function popUpQuestionOpen(question){
+function popUpQuestionOpen(){
 
     // Подготовка к созданию окна. Удаляем тело прошлого модального окна, если есть
     deletePopUpMain()
 
-    currentQuestionId = question.className.split(" ")[1].replace("id", "");
     currentQuestionType = allQuestions[currentQuestionId].type;
 
     constuctPopUp();
@@ -392,11 +393,9 @@ function dropObject(e){
         dropTarget = e.target;
 
     }else if (e.target.tagName == "DIV" && e.target.className == "question_type_3_drag"){
-        // e.target.parentNode
         console.log("ITS ANOTHER DROP");
         dropTarget = e.target.parentNode;
     }else{
-        // e.target.parentNode
         console.log(e.target);
         console.log("ITS SOMETHERE");
         console.log(dragFrom);
@@ -415,22 +414,6 @@ function dropObject(e){
     dragNdropObject.style = null;
     dropTarget.appendChild(dragNdropObject);
 
-}
-
-// Функция проверки, и очистки дубликатов ответов в drop_zones
-function checkDragDuplicates(answers){
-
-    dropZones = answers.getElementsByClassName(`question_type_${currentQuestionType}_answer_drop_zone`);
-    
-    for (let i = 0; i < dropZones.length; i++){
-        let child = dropZones[i].children[0];
-        if (child != null){
-            if (child.innerHTML == dragNdropObject.innerHTML) {
-                console.log("Дубликат удален");
-                child.remove();
-            }
-        }
-    }
 }
 
 
