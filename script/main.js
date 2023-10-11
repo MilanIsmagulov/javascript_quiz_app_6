@@ -8,8 +8,9 @@ let popUpWindow = document.getElementById("popup_window");
 let popUpClose = document.getElementById("popup_close");
 let popUpBottom;
 
-let dragNdropObject = 0;
-let dropTarget = 0;
+let dragNdropObject;
+let dropTarget;
+let dragFrom;
 
 let currentQuestionId = -1;   
 let currentQuestionType = 0;
@@ -335,29 +336,32 @@ function answerIsCorrect(question, userAnswers){
 // Функция обработчик события "Взяли объект"
 function dragNdropHandler(e){
     console.log("DRAG-N-DROP");
+    dragFrom = e.target.parentNode;
+    console.log(`FROM ${dragFrom}`);
+    
     // Создание точной копии объекта
-    let clone = e.target.cloneNode(true);
-    dragNdropObject = clone;
-    e.target.parentNode.appendChild(clone);
-
+    dragNdropObject = e.target;
+    // e.target.parentNode.appendChild(clone);
+    // e.target.remove();
+    
     // даём элементу абсолютную позицию, да бы перемещать без нарушения верстки
     // и перемещаем его на позицию курсора
-    clone.style.position = 'absolute';
-    dragMoveAt(e, clone);
+    dragNdropObject.style.position = 'absolute';
+    dragMoveAt(e, dragNdropObject);
 
     // 3, перемещать по экрану
     document.onmousemove = function(e) {
-        dragMoveAt(e, clone);
+        dragMoveAt(e, dragNdropObject);
     }
 
     // 4. отследить окончание переноса
-    clone.onmouseup = function() {
+    dragNdropObject.onmouseup = function() {
         document.onmousemove = null;
-        clone.onmouseup = null;
-        clone.remove();
+        dragNdropObject.onmouseup = null;
+        dragNdropObject.remove();
 
         // Отслеживаем, где отпустили объект
-        document.getElementById('question_type_3_answers').addEventListener('mouseover', (e) => dropObject(e), {once: true});
+        document.addEventListener('mouseover', (e) => dropObject(e), {once: true});
         
     }
 }
@@ -370,6 +374,7 @@ function dragMoveAt(e, el) {
 
 // Функция обработчик, отслеживаем где отпустили объект и добавляем его в соотв. drop_zone
 function dropObject(e){
+    console.log("Функция обработчик, отслеживаем где отпустили объект и добавляем его в соотв. drop_zone");
     if (e.target.tagName == "IMG"){
         console.log("ITS IMG");
         let parents = e.target.parentNode.parentNode;
@@ -386,15 +391,30 @@ function dropObject(e){
         console.log("ITS DROP SPACE");
         dropTarget = e.target;
 
+    }else if (e.target.tagName == "DIV" && e.target.className == "question_type_3_drag"){
+        // e.target.parentNode
+        console.log("ITS ANOTHER DROP");
+        dropTarget = e.target.parentNode;
+    }else{
+        // e.target.parentNode
+        console.log(e.target);
+        console.log("ITS SOMETHERE");
+        console.log(dragFrom);
+        dropTarget = dragFrom;
     }
 
     console.log(dropTarget);
+    console.log(dropTarget.children.length > 0);
+
+    // Если таргет, куда перетаскиваем объект, уже что то есть, 
+    // перемещаем содержимое на место, откуда взяли текущий объект 
+    if (dropTarget.children.length > 0) dragFrom.appendChild(dropTarget.children[0]);
     
-    if (dropTarget.children.length > 0) dropTarget.innerHTML = " ";
-    
-    checkDragDuplicates(document.getElementById(`question_type_${currentQuestionType}_answers`));
+
+    dragNdropObject.addEventListener('mousedown', (e) => dragNdropHandler(e));
     dragNdropObject.style = null;
     dropTarget.appendChild(dragNdropObject);
+
 }
 
 // Функция проверки, и очистки дубликатов ответов в drop_zones
