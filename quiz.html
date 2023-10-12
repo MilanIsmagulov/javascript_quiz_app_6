@@ -5,98 +5,154 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/style.css">
     <script src="./script/main.js" defer></script>
+    <script src="./script/create-elements.js" defer></script>
     <title>Своя игра</title>
 </head>
 <body>
-    <div class="upper_side">
-        <div class="black_header">
-            <h1>
-                Своя игра
-            </h1>
-            <div class="links_black_header">
-                <a href="../../../../index.html">На главную</a>
-                <a href="../../../new_material/page_new_mat.html">Назад</a>
+
+    <header>
+        <div class="header_wrap">
+            <div class="header-title">
+                <h1>Своя игра</h1>
+            </div>
+            <div class="header_links">
+                <a href="#">На главную</a>
+                <a href="#">Назад</a>
             </div>
         </div>
-    </div>
-    <div class="main_window">
-        <div class="left_side">
-            <p class="left_side_text">
-                Перед вами задания разных уровней сложности. У вас 10 попыток, чтобы получить призовые 1550 очков. Кликните на карточку, чтобы перейти к заданию. Выберите вариант (варианты) ответа и нажмите кнопку «Ответить»
-            </p>
-            <div class="questions_cards_side">
+    </header>
+
+    <div class="main_wrap">
+        <div class="question_wrap">
+            <div class="text_wrap">
+                <p class="welcome_text">Перед вами задания разных уровней сложности. У вас 10 попыток, чтобы получить призовые 1550 очков. Кликните на карточку, чтобы перейти к заданию. Выберите вариант (варианты) ответа и нажмите кнопку «Ответить»</p>
+            </div>
+            <div class="buttons_box">
                 <div class="very_easy_questions">
-                    <button id="very_easy_question_1">
-                        <div class="correct_marker" id="correct_marker_1"></div>
-                        100
-                    </button>
-                    <button id="very_easy_question_2">100</button>
-                    <button id="very_easy_question_3">100</button>
+                    <div class="question id0">
+                        <button>100</button>
+                    </div>
+                    <div class="question id1">
+                        <button>100</button>
+                    </div>
+                    <div class="question id2">
+                        <button>100</button>
+                    </div>
                 </div>
                 <div class="easy_questions">
-                    <button id="easy_question_1">150</button>
-                    <button id="easy_question_2">150</button>
-                    <button id="easy_question_3">150</button>
+                    <div class="question id3">
+                        <button>150</button>
+                    </div>
+                    <div class="question id4">
+                        <button>150</button>
+                    </div>
+                    <div class="question id5">
+                        <button>150</button>
+                    </div>
                 </div>
                 <div class="middle_questions">
-                    <button id="middle_question_1">200</button>
-                    <button id="middle_question_2">200</button>
-                    <button id="middle_question_3">200</button>
+                    <div class="question id6">
+                        <button>200</button>
+                    </div>
+                    <div class="question id7">
+                        <button>200</button>
+                    </div>
+                    <div class="question id8">
+                        <button>200</button>
+                    </div>
                 </div>
                 <div class="middle_hard_questions">
-                    <button id="middle_hard_question_1">250</button>
-                    <button id="middle_hard_question_2">250</button>
-                    <button id="middle_hard_question_3">250</button>
+                    <div class="question id9">
+                        <button>250</button>
+                    </div>
+                    <div class="question id10">
+                        <button>250</button>
+                    </div>
+                    <div class="question id11">
+                        <button>250</button>
+                    </div>
                 </div>
                 <div class="hard_questions">
-                    <button id="hard_question_1">300</button>
-                    <button id="hard_question_2">300</button>
-                    <button id="hard_question_3">300</button>
-                </div>
-            </div>
-            <div class="scoring_side">
-                <div class="number_of_points">
-                    <p>Количество очков</p>
-                    <p class="points" id="points_of_correct_1">0</p>
-                </div>
-                <div class="number_of_points">
-                    <p>Количество попыток</p>
-                    <p class="points" id="points_of_attempt_1">10</p>
-                </div>
-            </div>
-        </div>
-        <div class="right_side">
-            <img src="./content/logo_of_profi.png" alt="">
-        </div>
-    </div>
-    <div id="popup_main_1" class="popup closed">
-        <div class="popup_body">
-            <div class="popup_content">
-                <div class="close_popup">
-                    <div class="questions" id="question_number_1">
-                            
+                    <div class="question id12">
+                        <button>300</button>
                     </div>
-                    <button id="close_popup_button_1" class="close_popup_button">
-                        <img src="./content/close.svg" alt="close_popup">
-                    </button>
+                    <div class="question id13">
+                        <button>300</button>
+                    </div>
+                    <div class="question id14">
+                        <button>300</button>
+                    </div>
                 </div>
-                <div class="answers_btn" id="answers_buttons1">
-                            
+                <div class="hard_questions">
+                    <div class="question id12">
+                        <button>350</button>
+                    </div>
+                    <div class="question id13">
+                        <button>350</button>
+                    </div>
+                    <div class="question id14">
+                        <button>350</button>
+                    </div>
                 </div>
-                <div class="main_buttons">
-                    <button id="check_button_1">
-                        Ответить
-                    </button>
-                    <button id="check_button_2">
-                        Повторить
-                    </button>
-                    <button id="check_button_3">
-                        Далее
-                    </button>
-                    <p>За этот вопрос вы можете получить 100 Очков</p>
+            </div>
+            <div class="score_wrap">
+                <div class="count_point">
+                    <p>Количество очков</p>
+                    <p class="points" id="score">0</p>
+                </div>
+                <div class="count_try">
+                    <p>Количество попыток</p>
+                    <p class="tryes" id="lives">10</p>
                 </div>
             </div>
         </div>
+        <div class="logo_wrap">
+            <img src="content/logo_of_profi.png" alt="logo">
+        </div>
     </div>
+
+    <div id="popup_window" class="popup closed"> 
+
+        <div class="popup_main" id="popup_main">
+            <div class="popup_content" id="popup_content">
+                <div class="header_popup">
+                    <div class="popup_question">
+                        <p id="question_text">Установите соответствие между названием насадки и изображением.</p>
+                    </div>
+                </div>
+                <div class="question_type_4_body" id="question_type_4">
+                    <form style="width: 100%;">
+                        <div class="question_type_4_drag_n_drop_tables">
+
+                            <div class="question_type_4_tables">
+                                
+
+                            </div>
+
+                            <div class="question_type_4_answers">
+                                  
+                            </div>
+
+                        </div>
+                        <div class="popup_bottom" id="popup_bottom">
+                            <input id="post_answ" type="submit" value="Ответить">
+                            <p id="question_price">Правильный ответ даст 250 очков</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+
+
+        
+        
+        
+
+
+
+    </script>
 </body>
 </html>
