@@ -126,10 +126,38 @@ let allQuestions = [
         correctAnswer: [1,2,3,0], // id правильного ответа из поля answers
         answered: null, // какой вариант ответа выбрал пользователь
     },
+    {
+        type: 3, 
+        price: 250,
+        text: 'Установите соответствие между названием насадки и изображением.',
+        image: "content/dragndrop/type_3_0/",
+        answers: ["Кольца Рашига","Кольца с крестообразной перегородкой","Кольца Палля","Кольца Лессинга"],
+        correctAnswer: [1,2,3,0], // id правильного ответа из поля answers
+        answered: null, // какой вариант ответа выбрал пользователь
+    },
+    {
+        type: 3, 
+        price: 250,
+        text: 'Установите соответствие между названием насадки и изображением.',
+        image: "content/dragndrop/type_3_0/",
+        answers: ["Кольца Рашига","Кольца с крестообразной перегородкой","Кольца Палля","Кольца Лессинга"],
+        correctAnswer: [1,2,3,0], // id правильного ответа из поля answers
+        answered: null, // какой вариант ответа выбрал пользователь
+    },
+    {
+        type: 4, 
+        price: 300,
+        text: 'Распределите виды насадочных элементов в соответствии с предложенной классификацией.',
+        tables: ["Регулярная насадка","Нерегулярная насадка"],
+        //answers: ["Круглые пружины","Плоскопараллельная насадка","Насадка Берля","Керамические насадки Инталлокс","Кольца с крестообразными перегородками","Кольца Палля","Наклонно-пакетная насадка","Насадка Зульцера","Насадка Гудлоу","Кольца Рашига","Кольца Лессинга"],
+        answers: ["1","2","3","4","5","6","7","8","9","10","11"],
+        correctAnswer: [[0,1,2],[3,4,5,6,7,8,9,10]], // id правильного ответа из поля answers
+        answered: null, // какой вариант ответа выбрал пользователь
+    },
 ]; 
 
 // Массив путей для состояния вопроса
-let questionsStates = [
+const questionsStates = [
     "./content/incorrect.svg",
     "./content/correct.svg"
     ];
@@ -151,6 +179,7 @@ document.addEventListener('DOMContentLoaded', function(){
         });
     }
     // DEBUGGING
+    
     
 });
 
@@ -177,22 +206,22 @@ function getUserAnswers(el){
     let textAnsw = [];
     let trueAnsw = allQuestions[currentQuestionId].answers;
 
-    if (currentQuestionType == 3) {
-        let dragZones = el.target.getElementsByClassName("question_type_3_answer_drop_zone");
-
-        for (el of dragZones){
-            console.log(el.children[0]);
-            if (el.children[0] != null) {
-                textAnsw.push(el.children[0].innerHTML);
-            }
+    if (currentQuestionType == 3 || currentQuestionType == 4) {
+        let dropZones = el.target.getElementsByClassName(`question_type_${currentQuestionType}_answer_drop_zone`);
+        
+        for (el of dropZones){
+            for (drop of el.children) textAnsw.push(drop.innerHTML);
         }
         
-        for (let i = 0; i < trueAnsw.length; i++) arr.push(trueAnsw.indexOf(textAnsw[i]));
-        for (let i = 0; i < arr.length; i++) if (arr[i] == -1) arr.pop();
-        
+        for (let i = 0; i < textAnsw.length; i++) arr.push(trueAnsw.indexOf(textAnsw[i]));
+
+        if (currentQuestionType == 4){
+            let countItemDropZone = dropZones[0].children.length;
+            let leftSide = arr.splice(0,countItemDropZone);
+            arr = [leftSide.sort((a, b) => a - b), arr.sort((a, b) => a - b)]; 
+        }
 
         console.log(arr);
-        
 
     }else if (currentQuestionType == 2){
 
@@ -220,6 +249,19 @@ function userHasAnswers(answers){
         return answers.length > 0;
     }else if (currentQuestionType == 2 || currentQuestionType == 3){
         return allQuestions[currentQuestionId].correctAnswer.length === answers.length;
+    }else if(currentQuestionType == 4){
+        let sumOfCorrect = 0;
+        let sumOfUsers = 0;
+        for (let i = 0; i < allQuestions[currentQuestionId].correctAnswer.length; i++)
+            for (let j = 0; j < allQuestions[currentQuestionId].correctAnswer[i].length; j++)
+                sumOfCorrect++;
+
+        for (let i = 0; i < answers.length; i++)
+            for (let j = 0; j < answers[i].length; j++)
+                sumOfUsers++;
+        console.log(sumOfCorrect);
+        console.log(sumOfUsers);
+        return sumOfCorrect === sumOfUsers;
     }
 }
 
@@ -237,9 +279,14 @@ function showErrors(e){
                 elToErrors.push(document.getElementById(`question_type_${currentQuestionType}_answer_${i}`));
         }
     } else if(currentQuestionType == 3){
-        let dragZones = e.target.getElementsByClassName("question_type_3_answer_drop_zone");
-
-        for (el of dragZones) elToErrors.push(el);
+        let dragZones = e.target.getElementsByClassName(`question_type_${currentQuestionType}_answer_drop_zone`);
+        for (el of dragZones) {
+            if (el.children.length == 0) elToErrors.push(el);
+        }
+    } else if(currentQuestionType == 4){
+        console.log(e.target);
+        let dragItems = e.target.getElementsByClassName(`question_type_4_answers`)[0].children;
+        for (el of dragItems) elToErrors.push(el);
     }
 
     for (el of elToErrors){
@@ -328,8 +375,14 @@ function userAnswersHandler(userAnswers){
 function answerIsCorrect(question, userAnswers){
     corrects = question.correctAnswer;
     userAnswers = userAnswers;
-
-    if (corrects.toString() === userAnswers.toString()) return true;
+    if (currentQuestionType == 4){
+        for (let i = 0; i < corrects.length; i++)
+            if (corrects[i].toString() != userAnswers[i].toString())
+                return false;
+        return true;
+    }
+    else if (corrects.toString() === userAnswers.toString()) 
+        return true;
 
     return false;
 }
@@ -376,44 +429,83 @@ function dragMoveAt(e, el) {
 // Функция обработчик, отслеживаем где отпустили объект и добавляем его в соотв. drop_zone
 function dropObject(e){
     console.log("Функция обработчик, отслеживаем где отпустили объект и добавляем его в соотв. drop_zone");
-    if (e.target.tagName == "IMG"){
-        console.log("ITS IMG");
-        let parents = e.target.parentNode.parentNode;
-        dropTarget = parents.getElementsByClassName("question_type_3_answer_drop_zone")[0];
-
-    }else if(e.target.tagName == "DIV" && e.target.className == "question_type_3_answer") {
-        console.log("ITS WHITE SPACE");
-        dropTarget = e.target.getElementsByClassName("question_type_3_answer_drop_zone")[0];
-
-    }else if(e.target.tagName == "DIV" && 
-            (e.target.className == "question_type_3_answer_drop_zone" || 
-            e.target.className == "question_type_3_answer_drop_zone un_answered"))
-        {
-        console.log("ITS DROP SPACE");
-        dropTarget = e.target;
-
-    }else if (e.target.tagName == "DIV" && e.target.className == "question_type_3_drag"){
-        console.log("ITS ANOTHER DROP");
-        dropTarget = e.target.parentNode;
-    }else{
-        console.log(e.target);
-        console.log("ITS SOMETHERE");
-        console.log(dragFrom);
-        dropTarget = dragFrom;
-    }
+    
+    let dropTarget = defineDropTarget(e);
 
     console.log(dropTarget);
     console.log(dropTarget.children.length > 0);
 
-    // Если таргет, куда перетаскиваем объект, уже что то есть, 
-    // перемещаем содержимое на место, откуда взяли текущий объект 
-    if (dropTarget.children.length > 0) dragFrom.appendChild(dropTarget.children[0]);
-    
 
+
+    switch(currentQuestionType){
+        case 3:
+            // В 3 типе вопросов: 
+            // Если в таргете, куда перетаскиваем объект, уже что то есть, 
+            // перемещаем содержимое на место, откуда взяли текущий объект
+            if (dropTarget.children.length > 0) dragFrom.appendChild(dropTarget.children[0]);
+            break;
+        case 4:
+            // В 3 типе вопросов: ничего не делаем
+            break;
+    }
+    
+    dragNdropObject.classList.remove("un_answered");
+    dropTarget.classList.remove("un_answered");
     dragNdropObject.addEventListener('mousedown', (e) => dragNdropHandler(e));
     dragNdropObject.style = null;
     dropTarget.appendChild(dragNdropObject);
 
+}
+
+function defineDropTarget(e){
+    let dropTarget;
+    console.log(currentQuestionType);
+    console.log(e.target.className);
+    switch(currentQuestionType){
+        case 3:
+
+            console.log(e.target.tagName);
+            if (e.target.tagName == "IMG"){
+                console.log("ITS IMG");
+                let parents = e.target.parentNode.parentNode;
+                dropTarget = parents.getElementsByClassName(`question_type_3_answer_drop_zone`)[0];
+
+            }else if (e.target.tagName == "DIV" && e.target.className == `question_type_3_answer`) {
+                console.log("ITS WHITE SPACE");
+                dropTarget = e.target.getElementsByClassName(`question_type_3_answer_drop_zone`)[0]; 
+            }else if (e.target.className.indexOf(`drop_zone`) != -1){
+                console.log("ITS DROP SPACE");
+                dropTarget = e.target;
+
+            }else if (e.target.tagName == "DIV" && e.target.className == `question_type_3_drag`){
+                console.log("ITS ANOTHER DROP");
+                dropTarget = e.target.parentNode;
+            }else{
+                
+                console.log("ITS SOMETHERE");
+                // console.log(e.target);
+                // console.log(dragFrom);
+                dropTarget = dragFrom;
+            }
+            break;
+        case 4:
+            if (e.target.className.indexOf("drop_zone") != -1){
+                console.log("ITS DROP SPACE");
+                dropTarget = e.target;
+            }else if(e.target.parentNode.className.indexOf("drop_zone") != -1){
+                
+                console.log("ITS ANOTHER DRAG IN DROP SPACE");
+                dropTarget = e.target.parentNode;
+            }else{
+                console.log("ITS SOMETHERE");
+                dropTarget = dragFrom;
+            }
+            
+            
+            break;
+    }
+
+    return dropTarget;
 }
 
 

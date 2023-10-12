@@ -28,7 +28,7 @@ function createPopUpMain(question){
             break;
 
         case 4:
-            constuctQuestionType5(question);
+            elChB.appendChild(createBodyPopUp_Type4(question));
             break;
       
         default:
@@ -305,7 +305,7 @@ function createDropdown_Type2(question, i){
             elChD.classList.toggle("closed");
         });
 
-        elChD.addEventListener('click', function(e){
+        elChD.addEventListener('mouseup', function(e){
             text = e.target.innerHTML;
             elChBChB.innerHTML = text;
         });
@@ -401,6 +401,109 @@ function createDrag_Type3(question, i){
     el.appendChild(elChA);
 
     el.addEventListener('mousedown', (e) => dragNdropHandler(e));
+
+    return el;
+}
+
+function createBodyPopUp_Type4(question){
+    let el = document.createElement("div");
+    el.setAttribute("class", "question_type_4_body");
+    el.setAttribute("id", "question_type_4");
+
+    let elChB = document.createElement("form");
+    elChB.setAttribute("style", "width: 100%;");
+
+    let elChBChB = document.createElement("div");
+    elChBChB.setAttribute("class", "question_type_4_drag_n_drop_tables");
+
+    elChBChB.appendChild(createTables_Type4(question));
+    if (!questionIsPassed(question)) elChBChB.appendChild(createAnswers_Type4(question));
+
+    elChB.appendChild(elChBChB);
+    el.appendChild(elChB);
+
+    if (!questionIsPassed(question)) elChB.appendChild(createBottomPopUp(question));
+
+    return el;
+}
+
+function createTables_Type4(question){
+    let el = document.createElement("div");
+    el.setAttribute("class", "question_type_4_tables");
+
+    
+    for (let i = 0; i < question.tables.length; i++){
+        el.appendChild(createTable_Type4(question, i));
+        if (i != question.tables.length - 1) el.appendChild(createTableSplit_Type4());
+    }
+    
+
+    return el;
+}
+
+function createTable_Type4(question, i){
+    let el = document.createElement("div");
+    el.setAttribute("class", "question_type_4_table");
+    let elChB = document.createElement("div");
+    elChB.setAttribute("class", "question_type_4_table_name");
+    let elChBChB = document.createElement("div");
+    let elChBChBChA = document.createTextNode(`${question.tables[i]}`);
+    elChBChB.appendChild(elChBChBChA);
+    elChB.appendChild(elChBChB);
+    el.appendChild(elChB);
+    let elChD = document.createElement("div");
+    elChD.setAttribute("class", "question_type_4_answer_drop_zone");
+
+    if(questionIsPassed(question)){
+        for (let j = 0; j < question.answered[i].length; j++){
+            
+            let text = question.answers[question.answered[i][j]];
+            console.log(text);
+
+            let answ = createAnswer_Type4(text);
+
+            if (question.correctAnswer[i].indexOf(question.answers.indexOf(text)) != -1){
+                answ.style = "background-color: #bdffbd;";
+            }else answ.style = "background-color: #ffb9b9;";
+
+            elChD.appendChild(answ);
+        }
+        console.log("texttexttexttexttexttexttexttexttexttext");
+        console.log("texttexttexttexttexttexttexttexttexttext");
+        console.log("texttexttexttexttexttexttexttexttexttext");
+    }
+
+    el.appendChild(elChD);
+
+    return el;
+}
+
+function createTableSplit_Type4(){
+    let el = document.createElement("div");
+    el.setAttribute("class", "question_type_4_table_split");
+    return el;
+}
+
+function createAnswers_Type4(question) {
+    let el = document.createElement("div");
+    el.setAttribute("class", "question_type_4_answers");
+
+    for (let i = 0; i < question.answers.length; i++){
+        el.appendChild(createAnswer_Type4(question.answers[i]));
+    } 
+
+    return el;
+}
+
+function createAnswer_Type4(text) {
+    let el = document.createElement("div");
+    el.setAttribute("class", "question_type_4_answer");
+    let elChA = document.createTextNode(`${text}`);
+    el.appendChild(elChA);
+
+    el.addEventListener('mousedown', (e) => dragNdropHandler(e));
+
+    
 
     return el;
 }
