@@ -462,7 +462,7 @@ function createTable_Type4(question, i){
             let text = question.answers[question.answered[i][j]];
             console.log(text);
 
-            let answ = createAnswer_Type4(text);
+            let answ = createAnswer_Type4(text, true);
 
             if (question.correctAnswer[i].indexOf(question.answers.indexOf(text)) != -1){
                 answ.style = "background-color: #bdffbd;";
@@ -470,9 +470,6 @@ function createTable_Type4(question, i){
 
             elChD.appendChild(answ);
         }
-        console.log("texttexttexttexttexttexttexttexttexttext");
-        console.log("texttexttexttexttexttexttexttexttexttext");
-        console.log("texttexttexttexttexttexttexttexttexttext");
     }
 
     el.appendChild(elChD);
@@ -494,13 +491,13 @@ function createAnswers_Type4(question) {
 
     return el;
 }
-function createAnswer_Type4(text) {
+function createAnswer_Type4(text, flag = false) {
     let el = document.createElement("div");
     el.setAttribute("class", "question_type_4_answer");
     let elChA = document.createTextNode(`${text}`);
     el.appendChild(elChA);
 
-    el.addEventListener('mousedown', (e) => dragNdropHandler(e));
+    if (!flag) el.addEventListener('mousedown', (e) => dragNdropHandler(e));
 
     
 
