@@ -384,13 +384,25 @@ input[type='checkbox']:checked {
     margin-top: 11%;
 }
 
-.custom-dropdown-select, .custom-dropdown-image-select div{
+.custom-dropdown-select div{
     width: 90%;
     padding: 1vh;
     font-size: 1vw !important;
 }
 
-.custom-dropdown-select, .custom-dropdown-image-select div:hover{
+.custom-dropdown-image-select div{
+    width: 90%;
+    padding: 1vh;
+    font-size: 1vw !important;
+}
+
+.custom-dropdown-select div:hover{
+    border-radius: 1vh;
+    background-color: #d3d3d3;
+    cursor: pointer;
+}
+
+.custom-dropdown-image-select div:hover{
     border-radius: 1vh;
     background-color: #d3d3d3;
     cursor: pointer;
