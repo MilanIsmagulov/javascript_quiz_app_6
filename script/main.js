@@ -154,6 +154,35 @@ let allQuestions = [
         correctAnswer: [[0,1,2],[3,4,5,6,7,8,9,10]], // id правильного ответа из поля answers
         answered: null, // какой вариант ответа выбрал пользователь
     },
+    {
+        type: 4, 
+        price: 300,
+        text: 'Распределите виды насадочных элементов в соответствии с предложенной классификацией.',
+        tables: ["Регулярная насадка","Нерегулярная насадка"],
+        //answers: ["Круглые пружины","Плоскопараллельная насадка","Насадка Берля","Керамические насадки Инталлокс","Кольца с крестообразными перегородками","Кольца Палля","Наклонно-пакетная насадка","Насадка Зульцера","Насадка Гудлоу","Кольца Рашига","Кольца Лессинга"],
+        answers: ["1","2","3","4","5","6","7","8","9","10","11"],
+        correctAnswer: [[0,1,2],[3,4,5,6,7,8,9,10]], // id правильного ответа из поля answers
+        answered: null, // какой вариант ответа выбрал пользователь
+    },
+    {
+        type: 4, 
+        price: 300,
+        text: 'Распределите виды насадочных элементов в соответствии с предложенной классификацией.',
+        tables: ["Регулярная насадка","Нерегулярная насадка"],
+        //answers: ["Круглые пружины","Плоскопараллельная насадка","Насадка Берля","Керамические насадки Инталлокс","Кольца с крестообразными перегородками","Кольца Палля","Наклонно-пакетная насадка","Насадка Зульцера","Насадка Гудлоу","Кольца Рашига","Кольца Лессинга"],
+        answers: ["1","2","3","4","5","6","7","8","9","10","11"],
+        correctAnswer: [[0,1,2],[3,4,5,6,7,8,9,10]], // id правильного ответа из поля answers
+        answered: null, // какой вариант ответа выбрал пользователь
+    },
+    {
+        type: 5, 
+        price: 350,
+        text: 'Определите элементы насадочной колонны.',
+        image: 'content/dropdown-images/0.jpg',
+        answers: ["Распределительное устройство","Насадка","Опорная решетка","Распределитель жидкости","Направляющий конус"],
+        correctAnswer: [0,1,2,3,4], // id правильного ответа из поля answers
+        answered: null, // какой вариант ответа выбрал пользователь
+    },
 ]; 
 
 // Массив путей для состояния вопроса
@@ -192,8 +221,7 @@ function submitHandler(e){
     if (userHasAnswers(answers)){
         console.log("USER ANSWERS: " + `${answers}`);
         userAnswersHandler(answers);
-        popUpQuestionOpen(allQuestions[currentQuestionId]);
-        // popUpQuestionClose();
+        popUpQuestionOpen();
     }else{
         showErrors(e);
     }
@@ -206,7 +234,16 @@ function getUserAnswers(el){
     let textAnsw = [];
     let trueAnsw = allQuestions[currentQuestionId].answers;
 
-    if (currentQuestionType == 3 || currentQuestionType == 4) {
+    if (currentQuestionType == 5){
+        let rawAnsw = document.getElementsByClassName("custom-dropdown-input-placeholder");
+        for (el of rawAnsw){
+            textAnsw.push(el.innerHTML);
+            if (el.innerHTML == "Выберите ответ") textAnsw.push(-1);
+        }
+
+        for (let i = 0; i < textAnsw.length; i++) arr.push(trueAnsw.indexOf(textAnsw[i]));
+        
+    }else if (currentQuestionType == 3 || currentQuestionType == 4) {
         let dropZones = el.target.getElementsByClassName(`question_type_${currentQuestionType}_answer_drop_zone`);
         
         for (el of dropZones){
@@ -247,7 +284,7 @@ function userHasAnswers(answers){
 
     if (currentQuestionType == 0 || currentQuestionType == 1 ) {
         return answers.length > 0;
-    }else if (currentQuestionType == 2 || currentQuestionType == 3){
+    }else if (currentQuestionType == 2 || currentQuestionType == 3 ||currentQuestionType == 5 ){
         return allQuestions[currentQuestionId].correctAnswer.length === answers.length;
     }else if(currentQuestionType == 4){
         let sumOfCorrect = 0;
@@ -272,7 +309,7 @@ function showErrors(e){
     if (currentQuestionType == 0 || currentQuestionType == 1 ) {
         for (let i = 0; i < allQuestions[currentQuestionId].answers.length; i++)
                 elToErrors.push(document.getElementById(`question_type_${currentQuestionType}_answer_${i}`));
-    }else if (currentQuestionType == 2){
+    }else if (currentQuestionType == 2 || currentQuestionType == 5){
         for (let i = 0; i < allQuestions[currentQuestionId].answers.length; i++){
             txtAnswer = document.getElementById(`question_type_${currentQuestionType}_answer_${i}`).childNodes[0].innerHTML
             if (txtAnswer == "Выберите ответ")

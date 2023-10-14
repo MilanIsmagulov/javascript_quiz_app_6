@@ -350,6 +350,7 @@ input[type='checkbox']:checked {
 }
 
 .custom-dropdown-input-icon{
+    display: flex;
     border-radius: 0.2vw;
     width: 1.2vw;
     height: 1.2vw;
@@ -383,13 +384,13 @@ input[type='checkbox']:checked {
     margin-top: 11%;
 }
 
-.custom-dropdown-select div{
+.custom-dropdown-select, .custom-dropdown-image-select div{
     width: 90%;
     padding: 1vh;
     font-size: 1vw !important;
 }
 
-.custom-dropdown-select div:hover{
+.custom-dropdown-select, .custom-dropdown-image-select div:hover{
     border-radius: 1vh;
     background-color: #d3d3d3;
     cursor: pointer;
@@ -560,6 +561,88 @@ input[type='checkbox']:checked {
 .question_type_4_table_split{
     height: 100%;
     border-left: red 1px solid;
+}
+
+.question_type_5_dropdown_image{
+    display: flex;
+    justify-content: center;
+    height: 25vw;
+    margin-bottom: 3vh;
+}
+
+.question_type_5_image{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    height: 100%;
+}
+
+.question_type_5_image img{
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+}
+
+.question_type_5_answers{
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 30%;
+    height: 100%;
+}
+
+.question_type_5_dropdown_block{
+    display: flex;
+    padding: 3%;
+    width: 100%;
+}
+
+.custom-dropdown-image-select{
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    position: fixed;
+    border: .2vh solid black;
+    border-radius: 1vh;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    transition: .15s;
+    
+    width: auto;
+    min-width: 10%;
+    height: 20%;
+    margin-top: 11%;
+    overflow-y: scroll;
+}
+
+.question_type_5_dropdown_text{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #025EA1;
+    color: white;
+    width: 4vw;
+    font-weight: bold;
+    height: 3vw;
+    font-size: 1.4vw;
+    border: 0.2vw #025EA1 solid;
+    border-radius: 0.4vw;
+    margin-right: 2vw;
+}
+
+.question_type_5_dropdown_answer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: 0.2vw #025EA1 solid;
+    border-radius: .8vh;
+    width: 100%;
+    cursor: pointer;
 }
 
 

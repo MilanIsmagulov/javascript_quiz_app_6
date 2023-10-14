@@ -30,7 +30,11 @@ function createPopUpMain(question){
         case 4:
             elChB.appendChild(createBodyPopUp_Type4(question));
             break;
-      
+
+        case 5:
+            elChB.appendChild(createBodyPopUp_Type5(question));
+            break;
+    
         default:
             break
     }
@@ -426,7 +430,6 @@ function createBodyPopUp_Type4(question){
 
     return el;
 }
-
 function createTables_Type4(question){
     let el = document.createElement("div");
     el.setAttribute("class", "question_type_4_tables");
@@ -440,7 +443,6 @@ function createTables_Type4(question){
 
     return el;
 }
-
 function createTable_Type4(question, i){
     let el = document.createElement("div");
     el.setAttribute("class", "question_type_4_table");
@@ -477,13 +479,11 @@ function createTable_Type4(question, i){
 
     return el;
 }
-
 function createTableSplit_Type4(){
     let el = document.createElement("div");
     el.setAttribute("class", "question_type_4_table_split");
     return el;
 }
-
 function createAnswers_Type4(question) {
     let el = document.createElement("div");
     el.setAttribute("class", "question_type_4_answers");
@@ -494,7 +494,6 @@ function createAnswers_Type4(question) {
 
     return el;
 }
-
 function createAnswer_Type4(text) {
     let el = document.createElement("div");
     el.setAttribute("class", "question_type_4_answer");
@@ -506,4 +505,118 @@ function createAnswer_Type4(text) {
     
 
     return el;
+}
+
+
+function createBodyPopUp_Type5(question){
+    let el = document.createElement("div");
+    el.setAttribute("class", "question_type_5_body");
+    el.setAttribute("id", "question_type_5");
+    let elChB = document.createElement("form");
+    elChB.setAttribute("style", "width: 100%;");
+    el.appendChild(elChB);
+
+    elChB.appendChild(createDropDownImage_Type5(question));
+    if (!questionIsPassed(question)) elChB.appendChild(createBottomPopUp(question));
+
+
+    return el;
+}
+function createDropDownImage_Type5(question){
+    let el = document.createElement("div");
+    el.setAttribute("class", "question_type_5_dropdown_image");
+    let elChB = document.createElement("div");
+    elChB.setAttribute("class", "question_type_5_image");
+    let elChBChB = document.createElement("img");
+    elChBChB.setAttribute("src", `${question.image}`);
+    elChBChB.setAttribute("alt", "");
+    elChB.appendChild(elChBChB);
+    el.appendChild(elChB);
+
+    el.appendChild(createAnswers_Type5(question));
+
+    return el;
+}
+function createAnswers_Type5(question){
+    let el = document.createElement("div");
+    el.setAttribute("class", "question_type_5_answers");
+
+    for (let i = 0; i < question.answers.length; i++) {
+        el.appendChild(createDropdownBlock_Type5(question, i));
+    }
+    
+    return el;
+}
+function createDropdownBlock_Type5(question, i){
+    let passed = questionIsPassed(question);
+
+    let el = document.createElement("div");
+    el.setAttribute("class", "question_type_5_dropdown_block");
+
+    let elChB = document.createElement("div");
+    elChB.setAttribute("class", "question_type_5_dropdown_text");
+    let elChBChA = document.createTextNode(`${i+1}`);
+    elChB.appendChild(elChBChA);
+    el.appendChild(elChB);
+
+    let elChD = document.createElement("div");
+    elChD.setAttribute("class", "question_type_5_dropdown_answer");
+    elChD.setAttribute("id", `question_type_5_answer_${i}`);
+
+    let elChDChB = document.createElement("div");
+    elChDChB.setAttribute("class", "custom-dropdown-input-placeholder");
+    let elChDChBChA;
+    if (!passed) elChDChBChA = document.createTextNode("Выберите ответ");
+    else {
+        let text = `${question.answers[question.answered[i]]}`;
+        elChDChBChA = document.createTextNode(text);
+        if (question.correctAnswer[i] == question.answered[i]){
+            elChD.style = "background-color: #bdffbd;";
+        }else elChD.style = "background-color: #ffb9b9;";
+    }
+
+    elChDChB.appendChild(elChDChBChA);
+
+    elChD.appendChild(elChDChB);
+
+    let elChDChD = document.createElement("div");
+    elChDChD.setAttribute("class", "custom-dropdown-input-icon");
+    let elChDChDChA = document.createElement("img");
+    elChDChDChA.setAttribute("src", "content/check-mark.png");
+    elChDChDChA.setAttribute("alt", "");
+    elChDChD.appendChild(elChDChDChA);
+    
+    elChD.appendChild(elChDChD);
+
+    let elChDChF = document.createElement("div");
+    elChDChF.setAttribute("class", "custom-dropdown-image-select closed");
+
+    for (let j = 0; j < question.answers.length; j++) {
+        let elChDChFChB = document.createElement("div");
+        let elChDChFChBChA = document.createTextNode(`${question.answers[j]}`);
+        
+        if (!passed){
+            elChDChFChB.addEventListener('mouseup', function(e){
+                text = e.target.innerHTML;
+                elChDChB.innerHTML = text;
+                elChD.classList.remove("un_answered");
+            });
+        }
+
+        elChDChFChB.appendChild(elChDChFChBChA);
+        elChDChF.appendChild(elChDChFChB);
+    }
+
+    if (!passed){
+        elChD.addEventListener('click', function(e){
+            elChDChF.classList.toggle("closed");
+        });
+    }
+    
+    
+    elChD.appendChild(elChDChF);
+    el.appendChild(elChD);
+
+    return el;
+
 }
