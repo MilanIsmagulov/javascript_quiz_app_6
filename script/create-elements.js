@@ -1,4 +1,8 @@
+let imgPath;
+
 function createPopUpMain(question){
+    if (question.image) imgPath = `content/quiz-images/type${question.type}`; 
+
     let el = document.createElement("div");
     el.setAttribute("class", "popup_main");
     el.setAttribute("id", "popup_main");
@@ -163,7 +167,7 @@ function createImgDiv_Type0(question){
     el.setAttribute("id", "question_type_0_img");
     
     let img = document.createElement("img");
-    img.setAttribute("src", question.image);
+    img.setAttribute("src", `${imgPath}/${allQuestions.indexOf(question)}.png`);
     el.appendChild(img);
 
     return el;
@@ -244,12 +248,13 @@ function createBodyPopUp_Type2(question){
     elChBChBChBChB.setAttribute("class", "place_of_custom_dropdown");
 
     let text = question.textDd.split('|');
-    elChBChBChBChB.appendChild(document.createTextNode(text[0])); 
+    createDivsForText(text[0], elChBChBChBChB);
+
     for (let i = 0; i < question.answers.length; i++) {
         elChBChBChBChB.appendChild(createDropdown_Type2(question, i));
-        textel = document.createTextNode(text[i+1]);
-        elChBChBChBChB.appendChild(textel);
+        createDivsForText(text[i+1], elChBChBChBChB);
     }
+    
 
     elChBChBChB.appendChild(elChBChBChBChB);
     elChBChB.appendChild(elChBChBChB);
@@ -259,6 +264,15 @@ function createBodyPopUp_Type2(question){
     if (!questionIsPassed(question)) elChB.appendChild(createBottomPopUp(question));
 
     return el;
+}
+function createDivsForText(text, target) {
+    var words = text.split(" ");
+    
+    for (var i = 0; i < words.length; i++) {
+        var div = document.createElement("div");
+        div.textContent = words[i];
+        target.appendChild(div);
+    }
 }
 function createDropdown_Type2(question, i){
     let passed = questionIsPassed(question);
@@ -366,7 +380,7 @@ function createAnswer_Type3(question, i){
     let elChB = document.createElement("div");
     elChB.setAttribute("class", "question_type_3_answer_img");
     let elChBChB = document.createElement("img");
-    elChBChB.setAttribute("src", `${question.image}${[i]}.png`);
+    elChBChB.setAttribute("src", `${imgPath}/${allQuestions.indexOf(question)}/${[i]}.png`);
     elChBChB.setAttribute("alt", "");
     elChB.appendChild(elChBChB);
     el.appendChild(elChB);
@@ -525,7 +539,7 @@ function createDropDownImage_Type5(question){
     let elChB = document.createElement("div");
     elChB.setAttribute("class", "question_type_5_image");
     let elChBChB = document.createElement("img");
-    elChBChB.setAttribute("src", `${question.image}`);
+    elChBChB.setAttribute("src", `${imgPath}/${allQuestions.indexOf(question)}.png`);
     elChBChB.setAttribute("alt", "");
     elChB.appendChild(elChBChB);
     el.appendChild(elChB);
@@ -616,4 +630,127 @@ function createDropdownBlock_Type5(question, i){
 
     return el;
 
+}
+
+function createResult(){
+
+    let precentageCorrect = Math.round((countCorrectAnswered / countAnswered) * 100);
+    let precentageWrong = Math.round(((countAnswered - countCorrectAnswered) / countAnswered) * 100);
+    let countQuestions = allQuestions.length;
+
+
+    let el = document.createElement("div");
+    el.setAttribute("class", "popup_main");
+    el.setAttribute("id", "popup_main");
+    let elChB = document.createElement("div");
+    elChB.setAttribute("class", "popup_content");
+    elChB.setAttribute("id", "popup_content");
+    let elChBChB = document.createElement("div");
+    elChBChB.setAttribute("class", "header_popup");
+    let elChBChBChB = document.createElement("div");
+    elChBChBChB.setAttribute("class", "popup_result");
+    let elChBChBChBChB = document.createElement("p");
+    elChBChBChBChB.setAttribute("class", "result_theme");
+    let elChBChBChBChBChA = document.createTextNode("Полное название темы");
+    elChBChBChBChB.appendChild(elChBChBChBChBChA);
+    elChBChBChB.appendChild(elChBChBChBChB);
+    let elChBChBChBChD = document.createElement("p");
+    elChBChBChBChD.setAttribute("class", "result_theme_short");
+    let elChBChBChBChDChA = document.createTextNode("Краткое название темы");
+    elChBChBChBChD.appendChild(elChBChBChBChDChA);
+    elChBChBChB.appendChild(elChBChBChBChD);
+    elChBChB.appendChild(elChBChBChB);
+    let elChBChBChD = document.createElement("div");
+    elChBChBChD.setAttribute("id", "popup_close");
+    elChBChBChD.setAttribute("class", "header_popup_close");
+
+    elChBChBChD.addEventListener('click', () => popUpQuestionClose());
+
+    let elChBChBChDChB = document.createElement("img");
+    elChBChBChDChB.setAttribute("src", "./content/close.svg");
+    elChBChBChDChB.setAttribute("alt", "header_popup");
+    elChBChBChD.appendChild(elChBChBChDChB);
+    elChBChB.appendChild(elChBChBChD);
+    elChB.appendChild(elChBChB);
+    let elChBChD = document.createElement("div");
+    elChBChD.setAttribute("class", "questions_result");
+    let elChBChDChB = document.createElement("div");
+    elChBChDChB.setAttribute("class", "questions_result_all");
+    let elChBChDChBChB = document.createElement("div");
+    let elChBChDChBChBChA = document.createTextNode("Количество тестовых (оцениваемых) заданий:");
+    elChBChDChBChB.appendChild(elChBChDChBChBChA);
+    elChBChDChB.appendChild(elChBChDChBChB);
+    let elChBChDChBChD = document.createElement("div");
+    elChBChDChBChD.setAttribute("id", "result_count_questions");
+
+    let elChBChDChBChDChA = document.createTextNode(`${countQuestions}`);
+
+    elChBChDChBChD.appendChild(elChBChDChBChDChA);
+    elChBChDChB.appendChild(elChBChDChBChD);
+    elChBChD.appendChild(elChBChDChB);
+    let elChBChDChD = document.createElement("div");
+    elChBChDChD.setAttribute("class", "questions_result_correct");
+    let elChBChDChDChB = document.createElement("div");
+    let elChBChDChDChBChA = document.createTextNode("Ваш результат:");
+    elChBChDChDChB.appendChild(elChBChDChDChBChA);
+    elChBChDChD.appendChild(elChBChDChDChB);
+    let elChBChDChDChD = document.createElement("div");
+    elChBChDChDChD.setAttribute("id", "result_users_correct_answered");
+    let elChBChDChDChDChA = document.createTextNode(`${score}`);
+    elChBChDChDChD.appendChild(elChBChDChDChDChA);
+    elChBChDChD.appendChild(elChBChDChDChD);
+    elChBChD.appendChild(elChBChDChD);
+    let elChBChDChF = document.createElement("div");
+    elChBChDChF.setAttribute("class", "questions_result_stats");
+    let elChBChDChFChB = document.createElement("div");
+    elChBChDChFChB.setAttribute("class", "result_correct_wrong");
+    let elChBChDChFChBChB = document.createElement("div");
+    elChBChDChFChBChB.setAttribute("class", "result_corrects");
+    let elChBChDChFChBChBChB = document.createElement("div");
+    let elChBChDChFChBChBChBChA = document.createTextNode("Количество правильных ответов:");
+    elChBChDChFChBChBChB.appendChild(elChBChDChFChBChBChBChA);
+    elChBChDChFChBChB.appendChild(elChBChDChFChBChBChB);
+    let elChBChDChFChBChBChD = document.createElement("div");
+    elChBChDChFChBChBChD.setAttribute("id", "result_corrects_num");
+    let elChBChDChFChBChBChDChA = document.createTextNode(`${countCorrectAnswered}`);
+    elChBChDChFChBChBChD.appendChild(elChBChDChFChBChBChDChA);
+    elChBChDChFChBChB.appendChild(elChBChDChFChBChBChD);
+    elChBChDChFChB.appendChild(elChBChDChFChBChB);
+    let elChBChDChFChBChD = document.createElement("div");
+    elChBChDChFChBChD.setAttribute("class", "result_wrong");
+    let elChBChDChFChBChDChB = document.createElement("div");
+    let elChBChDChFChBChDChBChA = document.createTextNode("Количество неправильных ответов:");
+    elChBChDChFChBChDChB.appendChild(elChBChDChFChBChDChBChA);
+    elChBChDChFChBChD.appendChild(elChBChDChFChBChDChB);
+    let elChBChDChFChBChDChD = document.createElement("div");
+    elChBChDChFChBChDChD.setAttribute("id", "result_wrongs_num");
+    let elChBChDChFChBChDChDChA = document.createTextNode(`${countAnswered - countCorrectAnswered}`);
+    elChBChDChFChBChDChD.appendChild(elChBChDChFChBChDChDChA);
+    elChBChDChFChBChD.appendChild(elChBChDChFChBChDChD);
+    elChBChDChFChB.appendChild(elChBChDChFChBChD);
+    elChBChDChF.appendChild(elChBChDChFChB);
+    let elChBChDChFChD = document.createElement("div");
+    elChBChDChFChD.setAttribute("class", "result_diagram");
+
+    elChBChDChFChD.setAttribute("style", `--pCorr:${precentageCorrect};--b:10px;;`);
+    // elChBChDChFChD.setAttribute("style", `--pCorr:${precentageCorrect};--pUnCorr:${precentageWrong};--b:10px;;`);
+
+    elChBChDChF.appendChild(elChBChDChFChD);
+    let elChBChDChFChF = document.createElement("div");
+    elChBChDChFChF.setAttribute("class", "result_corrects");
+    let elChBChDChFChFChB = document.createElement("div");
+    let elChBChDChFChFChBChA = document.createTextNode("Количество вопросов без ответа:");
+    elChBChDChFChFChB.appendChild(elChBChDChFChFChBChA);
+    elChBChDChFChF.appendChild(elChBChDChFChFChB);
+    let elChBChDChFChFChD = document.createElement("div");
+    elChBChDChFChFChD.setAttribute("id", "result_corrects_num");
+    let elChBChDChFChFChDChA = document.createTextNode(`${countQuestions - countAnswered}`);
+    elChBChDChFChFChD.appendChild(elChBChDChFChFChDChA);
+    elChBChDChFChF.appendChild(elChBChDChFChFChD);
+    elChBChDChF.appendChild(elChBChDChFChF);
+    elChBChD.appendChild(elChBChDChF);
+    elChB.appendChild(elChBChD);
+    el.appendChild(elChB);
+
+    return el;
 }

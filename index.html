@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="./styles/style.css">
     <script src="./script/main.js" defer></script>
     <script src="./script/create-elements.js" defer></script>
+    <script src="./script/allQuestions.js" defer></script>
     <title>Своя игра</title>
 </head>
 <body>
@@ -83,17 +84,6 @@
                         <button>300</button>
                     </div>
                 </div>
-                <div class="hard_questions">
-                    <div class="question id15">
-                        <button>350</button>
-                    </div>
-                    <div class="question id16">
-                        <button>350</button>
-                    </div>
-                    <div class="question id17">
-                        <button>350</button>
-                    </div>
-                </div>
             </div>
             <div class="score_wrap">
                 <div class="count_point">
@@ -104,6 +94,9 @@
                     <p>Количество попыток</p>
                     <p class="tryes" id="lives">10</p>
                 </div>
+                <input type="button" id="button_results" class="button_results btn_closed" value="Смотреть результаты">
+                    
+                </input>
             </div>
         </div>
         <div class="logo_wrap">
@@ -115,30 +108,65 @@
 
         <div class="popup_main" id="popup_main">
             <div class="popup_content" id="popup_content">
-
                 <div class="header_popup">
-                    <div class="popup_question">
-                        <p id="question_text">Определите элементы насадочной колонны.</p>
+                    <div class="popup_result">
+                        <p class="result_theme">Полное название темы</p>
+                        <p class="result_theme_short">Краткое название темы</p>
+                    </div>
+                    <div id="popup_close" class="header_popup_close">
+                        <img src="./content/close.svg" alt="header_popup">
                     </div>
                 </div>
-
-
-                
-
-
+                <div class="questions_result">
+                    <div class="questions_result_all">
+                        <div>
+                            Количество тестовых (оцениваемых) заданий:
+                        </div>
+                        <div id="result_count_questions">
+                            30
+                        </div>
+                    </div>
+                    <div class="questions_result_correct">
+                        <div>
+                            Ваш результат:
+                        </div>
+                        <div id="result_users_correct_answered">
+                            30
+                        </div>
+                    </div>
+                    <div class="questions_result_stats">
+                        <div class="result_correct_wrong">
+                            <div class="result_corrects">
+                                <div>
+                                    Количество правильных ответов:
+                                </div>
+                                <div id="result_corrects_num">
+                                    30
+                                </div>
+                            </div>
+                            <div class="result_wrong">
+                                <div>
+                                    Количество неправильных ответов:
+                                </div>
+                                <div id="result_wrongs_num">
+                                    30
+                                </div>
+                            </div>
+                        </div>
+                        <div class="result_diagram" style="--pCorr:30;--pUnCorr:20;--b:10px;--c:rgb(0, 114, 192);;"></div>
+                        <div class="result_corrects">
+                            <div>
+                                Количество вопросов без ответа:
+                            </div>
+                            <div id="result_corrects_num">
+                                30
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
     </div>
-    <script>
-
-
-        
-        
-        
-
-
-
-    </script>
 </body>
 </html>
