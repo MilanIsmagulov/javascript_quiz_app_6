@@ -27,8 +27,8 @@ header h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 100px;
-    padding: 30px;
+    height: 4vh;
+    padding: 2vw;
 }
 
 .header_links {
@@ -36,18 +36,16 @@ header h1 {
 }
 
 .header_links a {
-    font-size: 24px;
+    font-size: 1vw;
     text-decoration: none;
     text-align: center;
     color: white;
-    padding: 15px;
-    padding-left: 30px;
-    padding-right: 30px;
-    border: solid 2px;
-    border-radius: 35px;
-    width: 200px;
-    margin-left: 25px;
-    transition: all 0.3s;
+    padding: 2vh 4vh;
+    border: solid 0.13vw;
+    border-radius: 2vw;
+    width: 10vw;
+    margin-left: 2vw;
+    transition: all 0.15s;
 }
 
 .header_links a:hover {
@@ -165,8 +163,10 @@ header h1 {
 .score_wrap div{
     display: flex;
     margin-right: 40px;
+    align-items: center;
 }
 .score_wrap p{
+    font-size: 1.3vw;
     margin-right: 40px;
 }
 
@@ -190,6 +190,25 @@ header h1 {
     
     background-color: white;
     border-radius: 100%;
+}
+
+.button_results{
+    color: white;
+    background-color: rgb(0, 114, 192);
+    padding: .8vw;
+    border-radius: .8vw;
+    border: none;
+    font-size: 1.1vw;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.button_results:hover{
+    box-shadow: 0px 0px 23px 11px rgba(51, 102, 136, 0.35);
+    transition: all 0.3s;
+}
+
+.btn_closed{
+    display: none;
 }
 
 @media (width <= 1280px) {
@@ -244,6 +263,7 @@ header h1 {
         margin-right: 30px;
     }
     .score_wrap p{
+        font-size: 1.3vw;
         margin-right: 20px;
     }
     
@@ -292,7 +312,7 @@ header h1 {
 
     .score_wrap {
         padding-top: 50px;
-        font-size: 30px;
+        font-size: 1.3vw;
     }
 
     .state_marker {
